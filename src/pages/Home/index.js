@@ -1,13 +1,19 @@
 import { Outlet } from "react-router-dom";
-import "./Home.css";
+import Nav from "../../components/Nav";
+import Footer from "../../components/Footer";
+import "./style.css";
+import { useState } from "react";
 
-const Home = () => {
+const FrontPage = () => {
+  const [scrollTap, setScrollTap] = useState(false);
+
   return (
-    <div className="home-page">
-      Home
-      <Outlet />
+    <div className="front-page">
+      <Nav setScrollTap={setScrollTap} />
+      <Outlet context={{ scrollTap, setScrollTap }} />
+      <Footer />
     </div>
   );
 };
 
-export default Home;
+export default FrontPage;
