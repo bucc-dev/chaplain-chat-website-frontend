@@ -1,4 +1,4 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./Nav.css";
 
 const Nav = ({ setScrollTap }) => {
