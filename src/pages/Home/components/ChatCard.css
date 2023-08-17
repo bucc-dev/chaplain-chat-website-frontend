@@ -1,0 +1,55 @@
+@import url("./style.css");
+
+.chat__card {
+  width: 90%;
+  max-width: 400px;
+  height: auto;
+  background-color: white;
+  padding: 16px;
+  border-radius: 20px;
+  text-align: start;
+  display: flex;
+  flex-flow: column;
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.chat__card h3 {
+  color: var(--primary-color);
+}
+
+.chat__card textarea {
+  resize: none;
+  border-radius: 10px;
+  padding-top: 16px;
+  padding-inline: 16px;
+  outline: none;
+  border: solid 1px var(--primary-color);
+  height: 240px;
+}
+
+.input__container {
+  display: flex;
+  gap: 8px;
+  border: solid 1px var(--primary-color);
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.input__container input {
+  flex: 1;
+  border: none;
+  outline: none;
+}
+
+.input__container button {
+  padding: 12px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  color: white;
+  background-color: var(--primary-color);
+  width: 80px;
+  cursor: pointer;
+}
