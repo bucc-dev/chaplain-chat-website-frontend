@@ -53,3 +53,8 @@
   width: 80px;
   cursor: pointer;
 }
+
+.vent__btn {
+  width: 100%;
+  min-height: 45px;
+}

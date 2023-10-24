@@ -17,6 +17,21 @@
   text-decoration: none;
   font-family: var(--secondary-font);
   width: fit-content;
+  transition: all 100ms ease;
+}
+
+.btn:disabled {
+  background-color: var(--gray-light);
+}
+
+.btn:active {
+  transform: scale(0.99);
+}
+
+@media (hover: hover) {
+  .btn:hover {
+    cursor: pointer;
+  }
 }
 
 .restrict_width {

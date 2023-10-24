@@ -5,6 +5,8 @@
   --primary-color: #9778d4;
   --primary-dark: #5c067e;
   --primary-transparent-bg: rgba(151, 120, 212, 0.04);
+  --gray-light: rgb(174, 174, 174);
+  --gray-dark: rgb(131, 131, 131);
 
   /* FONTS */
   --alt-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
