@@ -32,13 +32,20 @@ const ChatCard = ({ desc, messagePlaceholder, emailPlaceholder }) => {
           "Content-Type": "application/json",
           Accept: "application/json"
         },
-        body: JSON.stringify({message, email})
+        body: JSON.stringify({message, email: email.length ? email : null})
       })
       const data = await response.json();
       setLoading(false);
       if (/success/i.test(data.status)) {
         toast.success("Submission successful!")
         setSubmitted(true);
+
+        // set the message to nothing
+        // I'm guessing the UseEffect is supposed to do this
+        // but I don't get why it's not doing it so I'm adding it here
+        setMessage("");
+        setEmail("");
+
         return;
       }
       toast.error("Submission failed")
