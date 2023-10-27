@@ -23,14 +23,6 @@ const Nav = ({ setScrollTap }) => {
         Vent
       </Link>
       <Link
-        to="#"
-        /* /contact */ className={`home-page__nav__link ${
-          location === "/contact" && "active"
-        }`}
-      >
-        Contact
-      </Link>
-      <Link
         to="#chat-section" /* /communicate */
         className="btn home-page__nav__link"
         onClick={() => {
