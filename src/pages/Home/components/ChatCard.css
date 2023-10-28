@@ -58,3 +58,10 @@
   width: 100%;
   min-height: 45px;
 }
+
+@media (max-width: 375px) {
+  .chat__card {
+    width: 100%;
+    border-radius: 8px;
+  }
+}
