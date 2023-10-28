@@ -47,3 +47,9 @@
   position: absolute;
   color: white;
 }
+
+@media (max-width: 768px) {
+  .home-page__nav__link:last-of-type {
+    display: none;
+  }
+}

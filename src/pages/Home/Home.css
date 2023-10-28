@@ -158,3 +158,34 @@
   z-index: 0;
   width: 100%;
 }
+
+
+@media (max-width: 600px) {
+  .home-page__section {
+    height: auto;
+  }
+
+  .home-page__section.top__section > div {
+    flex-flow: column;
+  }
+
+  .home-page__section.bottom__section .left {
+    flex: 1 !important;
+  }
+
+  .home-page__section.bottom__section .right {
+    display: none !important;
+  }
+
+  .home-page__section.bottom__section .desc__2 {
+    margin-bottom: 24px;
+  }
+  
+  .home-page__section .btn {
+    width: 100% !important;
+    height: 40px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
