@@ -9,3 +9,9 @@
   font-size: small;
   margin-top: auto;
 }
+
+.home-page__footer p a {
+  margin-inline: 4px;
+  color: aqua;
+  text-decoration: none;
+}
