@@ -1,0 +1,5 @@
+.front-page {
+  display: flex;
+  flex-flow: column;
+  min-height: inherit;
+}

@@ -1,0 +1,40 @@
+/* GLOBAL STYLES */
+.App {
+  text-align: center;
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+}
+
+.btn {
+  border-radius: 10px;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 8px;
+  border: none;
+  font-weight: 500;
+  font-size: 15px;
+  text-decoration: none;
+  font-family: var(--secondary-font);
+  width: fit-content;
+  transition: all 100ms ease;
+}
+
+.btn:disabled {
+  background-color: var(--gray-light);
+}
+
+.btn:active {
+  transform: scale(0.99);
+}
+
+@media (hover: hover) {
+  .btn:hover {
+    cursor: pointer;
+  }
+}
+
+.restrict_width {
+  max-width: var(--page-width-max);
+  align-self: center;
+}
