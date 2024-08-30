@@ -1,9 +1,23 @@
 export const IMAGES = {
   logo: { src: "/logo.jpeg", w: 128, h: 140 },
+
+  homepage: {
+    care: { src: "/care.png", w: 350, h: 263 },
+    hands: { src: "/hands.png", w: 350, h: 263 },
+    hug: { src: "/hug.png", w: 400, h: 300 },
+    joined_hands: { src: "/joined_hands.png", w: 300, h: 225 },
+  },
 };
 
 export const PAGES = {
   base_url: "",
+
+  login: "/auth/login",
+  signup: "/auth/signup",
+  forgot_password: "/auth/forgot-password",
+
+  home: "/",
+  chat: "/chat",
 };
 
 export const MOCK_CHAT = [
