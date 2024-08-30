@@ -1,20 +1,20 @@
 import { useState } from "react";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import { useToggle } from "@/hooks/general";
 import { Input } from "@/components/ui/input";
-import { PAGES } from "@/constants/constants";
-import { alreadyLoggedIn } from "@/components/hoc/ProtectedRoute";
+// import { PAGES } from "@/constants/constants";
+// import { alreadyLoggedIn } from "@/components/hoc/ProtectedRoute";
 import { Button } from "@/components/ui/button";
-import { loginUser } from "@/lib/firebase";
+// import { loginUser } from "@/lib/firebase";
 import HeadTemplate from "@/components/general/HeadTemplate";
 
 const Login = () => {
-  const { push } = useRouter();
-  const [loading, setLoading] = useState(false);
+  // const { push } = useRouter();
+  const [loading] = useState(false);
   const [showPassword, toggleShowPassword] = useToggle(false);
   const [formData, setFormData] = useState({
     password: "",
@@ -28,19 +28,14 @@ const Login = () => {
   };
 
   const login = async () => {
-    setLoading(true);
-
-    const { error } = await loginUser(formData);
-
-    setLoading(false);
-
-    if (error) {
-      toast.error(error);
-
-      return;
-    }
-
-    push(PAGES.dashboard);
+    // setLoading(true);
+    // const { error } = await loginUser(formData);
+    // setLoading(false);
+    // if (error) {
+    //   toast.error(error);
+    //   return;
+    // }
+    // push(PAGES.dashboard);
   };
 
   return (
@@ -50,10 +45,10 @@ const Login = () => {
       <div className="max-w-lg w-full bg-white p-4 rounded-lg border shadow-md">
         <p className="text-2xl font-medium mb-5">Login to your account</p>
 
-        <p className="text-lg mb-1">Email address</p>
+        <p className="text-lg mb-1">Email address / ID</p>
         <Input
           onChange={(e) => updateFormData(e.target.value, "email")}
-          placeholder="Email address"
+          placeholder="Email address / ID"
           value={formData.email}
         />
 
@@ -80,12 +75,12 @@ const Login = () => {
         <div className="mt-4 flex justify-between items-center flex-col lg:flex-row gap-2 text-sm">
           <p>
             Don&apos;t have an account?{" "}
-            <Link href={PAGES.signup} className="text-main">
+            <Link href="" className="text-main">
               create an account
             </Link>
           </p>
 
-          <Link href={PAGES.forgot_password} className="text-main">
+          <Link href="" className="text-main">
             Forgot password?
           </Link>
         </div>
@@ -103,4 +98,5 @@ const Login = () => {
   );
 };
 
-export default alreadyLoggedIn(Login);
+export default Login;
+// export default alreadyLoggedIn(Login);

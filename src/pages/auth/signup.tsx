@@ -6,31 +6,19 @@ import Link from "next/link";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import { useToggle } from "@/hooks/general";
 import { Input } from "@/components/ui/input";
-import { HALLS_OF_RESIDENCE, PAGES } from "@/constants/constants";
-import { alreadyLoggedIn } from "@/components/hoc/ProtectedRoute";
-import { createUser } from "@/lib/firebase";
+import { PAGES } from "@/constants/constants";
+// import { alreadyLoggedIn } from "@/components/hoc/ProtectedRoute";
+// import { createUser } from "@/lib/firebase";
 import HeadTemplate from "@/components/general/HeadTemplate";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { is } from "../_app";
-import { cn } from "@/lib/utils";
 
 const Signup = () => {
-  const { push } = useRouter();
-  const [loading, setLoading] = useState(false);
+  // const { push } = useRouter();
+  const [loading] = useState(false);
   const [showPassword, toggleShowPassword] = useToggle(false);
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
     password: "",
-    hall_of_residence: "",
   });
 
   const updateFormData = (text: string, which: string) => {
@@ -40,19 +28,14 @@ const Signup = () => {
   };
 
   const signUpUser = async () => {
-    setLoading(true);
-
-    const { error } = await createUser(formData);
-
-    setLoading(false);
-
-    if (error) {
-      toast.error(error);
-
-      return;
-    }
-
-    push(PAGES.dashboard);
+    // setLoading(true);
+    // const { error } = await createUser(formData);
+    // setLoading(false);
+    // if (error) {
+    //   toast.error(error);
+    //   return;
+    // }
+    // push(PAGES.dashboard);
   };
 
   return (
@@ -62,40 +45,20 @@ const Signup = () => {
       <div className="max-w-lg w-full bg-white p-4 rounded-lg border shadow-md">
         <p className="text-2xl font-medium mb-5">Create a new account</p>
 
-        <p className="text-lg mb-1">Full name</p>
+        {/* <p className="text-lg mb-1">Full name</p>
         <Input
           onChange={(e) => updateFormData(e.target.value, "full_name")}
           placeholder="Full name"
           value={formData.full_name}
-        />
+        /> */}
 
-        <p className="text-lg mb-1 mt-4">Email address</p>
+        <p className="text-lg mb-1 mt-4">Email address / ID</p>
         <Input
           onChange={(e) => updateFormData(e.target.value, "email")}
-          placeholder="Email address"
+          placeholder="Email address / ID"
           value={formData.email}
           type="email"
         />
-
-        <p className="text-lg mt-4 mb-1">Hall of residence</p>
-        <Select
-          value={formData.hall_of_residence}
-          onValueChange={(e) => updateFormData(e, "hall_of_residence")}
-        >
-          <SelectTrigger className="w">
-            <SelectValue placeholder="Select a hall" />
-          </SelectTrigger>
-          <SelectContent className={cn("border", is.className)}>
-            <SelectGroup>
-              <SelectLabel>Halls</SelectLabel>
-              {HALLS_OF_RESIDENCE.map((h, i) => (
-                <SelectItem value={h} key={i} className="cursor-pointer">
-                  {h}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
 
         <p className="text-lg mt-4 mb-1">Password</p>
         <div className="relative flex items-center justify-center">
@@ -120,7 +83,7 @@ const Signup = () => {
         <div className="mt-4 flex justify-between items-center flex-col lg:flex-row gap-2 text-sm">
           <p>
             Already have an account?{" "}
-            <Link href={PAGES.login} className="text-main">
+            <Link href="" className="text-main">
               login
             </Link>
           </p>
@@ -139,4 +102,5 @@ const Signup = () => {
   );
 };
 
-export default alreadyLoggedIn(Signup);
+export default Signup;
+// export default alreadyLoggedIn(Signup);
