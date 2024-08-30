@@ -2,10 +2,23 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MOCK_CHAT } from "@/constants/constants";
 import { cn } from "@/lib/utils";
+import { useEffect, useRef, useState } from "react";
 import { GoPaperAirplane } from "react-icons/go";
 
 const Chat = () => {
-  // put an event listener on the input that sends the message when 'enter' is clicked
+  const [message, setMessage] = useState("");
+  const scrollElement = useRef<HTMLSpanElement>(null);
+
+  const sendMessage = () => {
+    if (!message) return;
+
+    alert(message);
+    setMessage("");
+  };
+
+  useEffect(() => {
+    scrollElement.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
 
   return (
     <div className="h-[calc(100vh-6rem)] flex flex-col gap-4">
@@ -43,12 +56,18 @@ const Chat = () => {
             </div>
           );
         })}
+        <span ref={scrollElement} />
       </div>
 
       <div className="w-full relative flex gap-2">
-        <Input placeholder="Type a message..." />
+        <Input
+          placeholder="Type a message..."
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyUp={(e) => e.key === "Enter" && sendMessage()}
+        />
 
-        <Button className="bg-main hover:bg-main/90">
+        <Button className="bg-main hover:bg-main/90" onClick={sendMessage}>
           <GoPaperAirplane />
         </Button>
       </div>
