@@ -12,8 +12,9 @@ const Home = () => {
 
         <p className="max-w-xl text-lg text-center text-gray-700">
           You don&apos;t have to control your thoughts, you just have to stop
-          letting them control you. Speak to someone and let them know what's on
-          your mind. When a problem is discussed, its weight is reduced.
+          letting them control you. Speak to someone and let them know
+          what&apos;s on your mind. When a problem is discussed, its weight is
+          reduced.
         </p>
 
         <div className="w-full flex gap-4 items-center justify-center flex-col sm:flex-row">
