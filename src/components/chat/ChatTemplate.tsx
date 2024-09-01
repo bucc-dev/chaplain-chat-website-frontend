@@ -1,16 +1,13 @@
-import { USER } from "@/atoms/atoms";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MOCK_CHAT } from "@/constants/constants";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 import { GoPaperAirplane } from "react-icons/go";
-import { useRecoilValue } from "recoil";
 
-const StudentChat = () => {
+const StudentChat = ({ sender }: { sender: "STUDENT" | "CHAPLAIN" }) => {
   const [message, setMessage] = useState("");
   const scrollElement = useRef<HTMLSpanElement>(null);
-  const user = useRecoilValue(USER);
 
   const sendMessage = () => {
     if (!message) return;
@@ -25,7 +22,7 @@ const StudentChat = () => {
 
   return (
     <div className="h-[calc(100vh-6rem)] flex flex-col gap-4">
-      <div className="w-full overflow-y-scroll h-full max-h-[calc(100vh-9.5rem)] flex flex-col gap-2">
+      <div className="w-full overflow-y-scroll h-full max-h-[calc(100vh-7rem)] flex flex-col gap-2">
         {MOCK_CHAT.map((m, i) => {
           const date_time = new Date(m.timestamp).toLocaleString();
 

@@ -1,12 +1,16 @@
 import { USER } from "@/atoms/atoms";
-import ChaplainChat from "@/components/chat/ChaplainChat";
-import StudentChat from "@/components/chat/StudentChat";
+import StudentMessages from "@/components/chat/StudentMessages";
+import ChatTemplate from "@/components/chat/ChatTemplate";
 import { useRecoilValue } from "recoil";
 
 const Chat = () => {
   const user = useRecoilValue(USER);
 
-  return user === "STUDENT" ? <StudentChat /> : <ChaplainChat />;
+  return user === "STUDENT" ? (
+    <ChatTemplate sender="STUDENT" />
+  ) : (
+    <StudentMessages />
+  );
 };
 
 export default Chat;

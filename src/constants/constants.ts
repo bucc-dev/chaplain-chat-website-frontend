@@ -18,6 +18,7 @@ export const PAGES = {
 
   home: "/",
   chat: "/chat",
+  chaplain_chat: (slug: string) => `/chat/${slug}`,
 };
 
 export const MOCK_CHAT = [
