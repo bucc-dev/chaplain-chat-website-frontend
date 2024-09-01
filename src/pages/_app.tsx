@@ -15,6 +15,21 @@ export const is = Instrument_Sans({ display: "swap", subsets: ["latin"] });
 const App = ({ Component, pageProps }: AppProps) => {
   const { pathname } = useRouter();
 
+  // the user atom will hold the type of user that is logged in
+  // and it will be set from the ProtectedRoute component
+
+  // there will be one login component, the chaplain's data will be created manually
+  // and a type of CHAPLAIN will be assigned to it
+
+  // the signup will only allow students to create account
+
+  // the chat page will be dynamic and change based on the user
+  // for the chaplain, it will be a list of their chats with the students
+  // for the student, it will just be the chat interface that will show their chats with the chaplain
+
+  // there will be a chat/[slug].tsx page that should only be accessible to the chaplain
+  // the `slug` corresponds to a collection/document of chats with a student
+
   return (
     <RecoilRoot>
       <Toaster
