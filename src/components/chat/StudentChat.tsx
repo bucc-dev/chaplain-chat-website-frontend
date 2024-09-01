@@ -1,13 +1,16 @@
+import { USER } from "@/atoms/atoms";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MOCK_CHAT } from "@/constants/constants";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 import { GoPaperAirplane } from "react-icons/go";
+import { useRecoilValue } from "recoil";
 
-const Chat = () => {
+const StudentChat = () => {
   const [message, setMessage] = useState("");
   const scrollElement = useRef<HTMLSpanElement>(null);
+  const user = useRecoilValue(USER);
 
   const sendMessage = () => {
     if (!message) return;
@@ -75,4 +78,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default StudentChat;
