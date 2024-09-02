@@ -13,8 +13,7 @@ const Signup = () => {
   const [loading] = useState(false);
   const [showPassword, toggleShowPassword] = useToggle(false);
   const [formData, setFormData] = useState({
-    full_name: "",
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -42,19 +41,11 @@ const Signup = () => {
       <div className="max-w-lg w-full bg-white p-4 rounded-lg border shadow-md">
         <p className="text-2xl font-medium mb-5">Create a new account</p>
 
-        {/* <p className="text-lg mb-1">Full name</p>
+        <p className="text-lg mb-1">Username</p>
         <Input
-          onChange={(e) => updateFormData(e.target.value, "full_name")}
-          placeholder="Full name"
-          value={formData.full_name}
-        /> */}
-
-        <p className="text-lg mb-1 mt-4">Email address / ID</p>
-        <Input
-          onChange={(e) => updateFormData(e.target.value, "email")}
-          placeholder="Email address / ID"
-          value={formData.email}
-          type="email"
+          onChange={(e) => updateFormData(e.target.value, "username")}
+          placeholder="Username"
+          value={formData.username}
         />
 
         <p className="text-lg mt-4 mb-1">Password</p>
