@@ -18,14 +18,14 @@ const Home = () => {
         </p>
 
         <div className="w-full flex gap-4 items-center justify-center flex-col sm:flex-row">
-          <Link href={PAGES.login} className="w-full max-w-[15rem]">
+          <Link href={PAGES.student.login} className="w-full max-w-[15rem]">
             <Button className="bg-main hover:bg-main/90 w-full">
               Talk to the chaplain
             </Button>
           </Link>
-          <Link href={PAGES.login} className="w-full max-w-[15rem]">
+          <Link href={PAGES.staff.login} className="w-full max-w-[15rem]">
             <Button className="bg-main hover:bg-main/90 w-full">
-              Chaplain login
+              Staff login
             </Button>
           </Link>
         </div>

@@ -1,3 +1,9 @@
+export const BASE_URL = "https://chaplaincy-helpdesk.vercel.app";
+
+const BASE_API_URL = "https://chaplain-backend-test.onrender.com/api";
+export const BASE_STAFF_URL = `${BASE_API_URL}/staffs`;
+export const BASE_STUDENT_URL = `${BASE_API_URL}/students`;
+
 export const IMAGES = {
   logo: { src: "/logo.jpeg", w: 128, h: 140 },
 
@@ -12,9 +18,13 @@ export const IMAGES = {
 export const PAGES = {
   base_url: "",
 
-  login: "/auth/login",
-  signup: "/auth/signup",
-  forgot_password: "/auth/forgot-password",
+  staff: {
+    login: "/auth/staff/login",
+    signup: "/auth/staff/signup",
+    verify: (email: string) => `/auth/staff/verify?email=${email}`,
+  },
+  student: { login: "/auth/student/login", signup: "/auth/student/signup" },
+  // forgot_password: "/auth/forgot-password",
 
   home: "/",
   chat: "/chat",

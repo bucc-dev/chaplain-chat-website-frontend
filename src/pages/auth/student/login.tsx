@@ -1,20 +1,24 @@
 import { useState } from "react";
+// import toast from "react-hot-toast";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Link from "next/link";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import { useToggle } from "@/hooks/general";
 import { Input } from "@/components/ui/input";
+// import { PAGES } from "@/constants/constants";
 // import { alreadyLoggedIn } from "@/components/hoc/ProtectedRoute";
-// import { createUser } from "@/lib/firebase";
+import { Button } from "@/components/ui/button";
+// import { loginUser } from "@/lib/firebase";
 import HeadTemplate from "@/components/general/HeadTemplate";
+import { PAGES } from "@/constants/constants";
 
-const Signup = () => {
+const Login = () => {
   // const { push } = useRouter();
   const [loading] = useState(false);
   const [showPassword, toggleShowPassword] = useToggle(false);
   const [formData, setFormData] = useState({
-    username: "",
     password: "",
+    username: "",
   });
 
   const updateFormData = (text: string, which: string) => {
@@ -23,9 +27,9 @@ const Signup = () => {
     });
   };
 
-  const signUpUser = async () => {
+  const login = async () => {
     // setLoading(true);
-    // const { error } = await createUser(formData);
+    // const { error } = await loginUser(formData);
     // setLoading(false);
     // if (error) {
     //   toast.error(error);
@@ -36,10 +40,10 @@ const Signup = () => {
 
   return (
     <>
-      <HeadTemplate title="Create an account" />
+      <HeadTemplate title="Login" />
 
       <div className="max-w-lg w-full bg-white p-4 rounded-lg border shadow-md">
-        <p className="text-2xl font-medium mb-5">Create a new account</p>
+        <p className="text-2xl font-medium mb-5">Login to your account</p>
 
         <p className="text-lg mb-1">Username</p>
         <Input
@@ -70,25 +74,29 @@ const Signup = () => {
 
         <div className="mt-4 flex justify-between items-center flex-col lg:flex-row gap-2 text-sm">
           <p>
-            Already have an account?{" "}
-            <Link href="" className="text-main">
-              login
+            Don&apos;t have an account?{" "}
+            <Link href={PAGES.student.signup} className="text-main">
+              create an account
             </Link>
           </p>
+          {/* 
+          <Link href="" className="text-main">
+            Forgot password?
+          </Link> */}
         </div>
 
-        <button
+        <Button
           disabled={loading}
-          onClick={signUpUser}
+          onClick={login}
           className="w-full mt-4 bg-main hover:bg-main/90 py-2.5 text-white rounded-md flex items-center justify-center gap-2"
         >
-          Create account
+          Login
           {loading && <AiOutlineLoading3Quarters className="animate-spin" />}
-        </button>
+        </Button>
       </div>
     </>
   );
 };
 
-export default Signup;
-// export default alreadyLoggedIn(Signup);
+export default Login;
+// export default alreadyLoggedIn(Login);

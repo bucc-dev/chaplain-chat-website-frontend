@@ -1,12 +1,15 @@
-import { IMAGES } from "@/constants/constants";
+import { BASE_URL, IMAGES } from "@/constants/constants";
 import { HeadTemplateProps } from "@/types/general";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 const HeadTemplate = ({ title }: HeadTemplateProps) => {
+  const { asPath } = useRouter();
+
   const meta = {
     title: title ? `${title} ~ BCW` : "BCW",
     description: "Anonymously chat with the chaplain.",
-    url: "",
+    url: BASE_URL + asPath,
     image: "",
     logo: IMAGES.logo.src,
   };
