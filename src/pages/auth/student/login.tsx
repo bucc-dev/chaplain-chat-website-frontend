@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import toast from "react-hot-toast";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Link from "next/link";
 import { LuEye, LuEyeOff } from "react-icons/lu";
@@ -10,7 +9,7 @@ import { alreadyLoggedIn } from "@/components/hoc/ProtectedRoute";
 import { Button } from "@/components/ui/button";
 import HeadTemplate from "@/components/general/HeadTemplate";
 import { useRouter } from "next/router";
-import { loginStaff, loginStudent } from "@/lib/api_helpers";
+import { loginStudent } from "@/lib/api_helpers";
 import { StudentLoginForm } from "@/types/auth";
 import toast from "react-hot-toast";
 
