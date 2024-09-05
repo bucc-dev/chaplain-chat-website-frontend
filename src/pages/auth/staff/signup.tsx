@@ -50,7 +50,7 @@ const Signup = () => {
 
   return (
     <>
-      <HeadTemplate title="Create an account" />
+      <HeadTemplate title="Create a staff account" />
 
       <div className="max-w-lg w-full bg-white p-4 rounded-lg border shadow-md">
         <p className="text-2xl font-medium mb-5">Create a new account</p>

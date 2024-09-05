@@ -54,7 +54,7 @@ const Login = () => {
 
   return (
     <>
-      <HeadTemplate title="Login" />
+      <HeadTemplate title="Staff login" />
 
       <div className="max-w-lg w-full bg-white p-4 rounded-lg border shadow-md">
         <p className="text-2xl font-medium mb-5">Login to your account</p>
