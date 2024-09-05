@@ -4,13 +4,13 @@ import { PAGES } from "@/constants/constants";
 import PageLoader from "../general/PageLoader";
 import { AuthData } from "@/types/auth";
 import { useSetRecoilState } from "recoil";
-import { AUTH_TOKEN } from "@/atoms/atoms";
+import { AUTH_DATA } from "@/atoms/atoms";
 
 // Check if user is logged in
 export const checkAuthentication = (ProtectedComponent: any) => {
   return function CheckIfTheUserIsLoggedIn(props: object) {
     const [isLoading, setIsLoading] = useState(true);
-    const setAuthToken = useSetRecoilState(AUTH_TOKEN);
+    const setAuthToken = useSetRecoilState(AUTH_DATA);
     const { push } = useRouter();
 
     useEffect(() => {
@@ -44,7 +44,7 @@ export const checkAuthentication = (ProtectedComponent: any) => {
 export const alreadyLoggedIn = (ProtectedComponent: () => JSX.Element) => {
   return function StopLoggedInUsersAccessToAuthModals(props: object) {
     const [isLoading, setIsLoading] = useState(true);
-    const setAuthToken = useSetRecoilState(AUTH_TOKEN);
+    const setAuthToken = useSetRecoilState(AUTH_DATA);
     const { push } = useRouter();
 
     useEffect(() => {

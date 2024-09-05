@@ -1,12 +1,36 @@
 import { TemplateProps } from "@/types/chat";
 import Image from "next/image";
-// import { checkAuthentication } from "../hoc/ProtectedRoute";
-import { IMAGES } from "@/constants/constants";
-import { USER } from "@/atoms/atoms";
+import { checkAuthentication } from "../hoc/ProtectedRoute";
+import { IMAGES, PAGES } from "@/constants/constants";
+import { AUTH_DATA } from "@/atoms/atoms";
 import { useRecoilValue } from "recoil";
+import { Button } from "../ui/button";
+import { useState } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { signOutUser } from "@/lib/api_helpers";
+import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 
 const DashboardTemplate = ({ children }: TemplateProps) => {
-  const user = useRecoilValue(USER);
+  const auth_data = useRecoilValue(AUTH_DATA);
+  const [loading, setLoading] = useState(false);
+  const { push } = useRouter();
+
+  const signOut = async () => {
+    setLoading(true);
+
+    const { data, error } = await signOutUser(auth_data.token, auth_data.type);
+
+    setLoading(false);
+
+    if (error) {
+      toast.error(error);
+      return;
+    }
+
+    toast.success(data);
+    push(PAGES.home);
+  };
 
   return (
     <section className="w-full min-h-screen flex items-center flex-col">
@@ -25,16 +49,18 @@ const DashboardTemplate = ({ children }: TemplateProps) => {
             <p className="font-medium">CHAT</p>
 
             <p className="text-xs md:text-sm bg-main text-white py-0.5 px-1.5 rounded-sm">
-              :{user.toLowerCase()}:
+              :{auth_data.type}:
             </p>
           </div>
 
-          <button
-            className="text-sm py-1 px-2.5 rounded-md hover:bg-gray-100"
-            // onClick={signOutUser}
+          <Button
+            onClick={signOut}
+            disabled={loading}
+            className="text-sm bg-transparent hover:bg-transparent text-black border-none shadow-none gap-2 px-0"
           >
-            Sign out
-          </button>
+            Sign out{" "}
+            {loading && <AiOutlineLoading3Quarters className="animate-spin" />}
+          </Button>
         </div>
       </div>
 
@@ -45,5 +71,4 @@ const DashboardTemplate = ({ children }: TemplateProps) => {
   );
 };
 
-export default DashboardTemplate;
-// export default checkAuthentication(DashboardTemplate);
+export default checkAuthentication(DashboardTemplate);

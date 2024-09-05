@@ -1,6 +1,6 @@
-import { BASE_STAFF_URL } from "@/constants/constants";
+import { BASE_STAFF_URL, BASE_STUDENT_URL } from "@/constants/constants";
 import { isValidEmail } from "./utils";
-import { StaffLoginForm, StaffRegisterForm } from "@/types/auth";
+import { AuthData, StaffLoginForm, StaffRegisterForm } from "@/types/auth";
 
 export const registerStaff = async (data: StaffRegisterForm) => {
   const { email, full_name, password, type } = data;
@@ -111,6 +111,7 @@ export const resendOtp = async (email: string) => {
   try {
     const req = await fetch(BASE_STAFF_URL + "/resendOtp", {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email,
       }),
@@ -121,6 +122,29 @@ export const resendOtp = async (email: string) => {
       return { data: null, error: res.message + "." };
 
     return { data: "Another OTP has been sent to your email.", error: null };
+  } catch (e) {
+    return { data: null, error: "A server error occured." };
+  }
+};
+
+export const signOutUser = async (token: string, type: AuthData["type"]) => {
+  const BASE_URL = type === "official" ? BASE_STAFF_URL : BASE_STUDENT_URL;
+
+  try {
+    const req = await fetch(BASE_URL + "/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const res = (await req.json()) as any;
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    localStorage.removeItem("auth-data");
+    return { data: res.message + ".", error: null };
   } catch (e) {
     return { data: null, error: "A server error occured." };
   }
