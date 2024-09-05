@@ -5,18 +5,20 @@ import Link from "next/link";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import { useToggle } from "@/hooks/general";
 import { Input } from "@/components/ui/input";
-// import { PAGES } from "@/constants/constants";
-// import { alreadyLoggedIn } from "@/components/hoc/ProtectedRoute";
-import { Button } from "@/components/ui/button";
-// import { loginUser } from "@/lib/firebase";
-import HeadTemplate from "@/components/general/HeadTemplate";
 import { PAGES } from "@/constants/constants";
+import { alreadyLoggedIn } from "@/components/hoc/ProtectedRoute";
+import { Button } from "@/components/ui/button";
+import HeadTemplate from "@/components/general/HeadTemplate";
+import { useRouter } from "next/router";
+import { loginStaff, loginStudent } from "@/lib/api_helpers";
+import { StudentLoginForm } from "@/types/auth";
+import toast from "react-hot-toast";
 
 const Login = () => {
-  // const { push } = useRouter();
-  const [loading] = useState(false);
+  const { push } = useRouter();
+  const [loading, setLoading] = useState(false);
   const [showPassword, toggleShowPassword] = useToggle(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<StudentLoginForm>({
     password: "",
     username: "",
   });
@@ -28,14 +30,27 @@ const Login = () => {
   };
 
   const login = async () => {
-    // setLoading(true);
-    // const { error } = await loginUser(formData);
-    // setLoading(false);
-    // if (error) {
-    //   toast.error(error);
-    //   return;
-    // }
-    // push(PAGES.dashboard);
+    setLoading(true);
+
+    const { data, error } = await loginStudent(formData);
+
+    setLoading(false);
+
+    if (error) {
+      toast.error(error);
+      return;
+    }
+
+    toast.success("Logged in.");
+    localStorage.setItem(
+      "auth-data",
+      JSON.stringify({
+        token: data,
+        expires_at: Date.now() + 43_200_000, // sets the expiry time to be 12 hours from when it was generated
+        type: "student",
+      })
+    );
+    push(PAGES.chat);
   };
 
   return (
@@ -98,5 +113,4 @@ const Login = () => {
   );
 };
 
-export default Login;
-// export default alreadyLoggedIn(Login);
+export default alreadyLoggedIn(Login);

@@ -5,6 +5,16 @@ export type StaffRegisterForm = {
   type: string;
 };
 
+export type StudentRegisterForm = {
+  username: string;
+  password: string;
+};
+
+export type StudentLoginForm = {
+  username: string;
+  password: string;
+};
+
 export type StaffLoginForm = {
   email: string;
   password: string;

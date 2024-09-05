@@ -4,17 +4,21 @@ import Link from "next/link";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import { useToggle } from "@/hooks/general";
 import { Input } from "@/components/ui/input";
-// import { alreadyLoggedIn } from "@/components/hoc/ProtectedRoute";
-// import { createUser } from "@/lib/firebase";
+import { alreadyLoggedIn } from "@/components/hoc/ProtectedRoute";
 import HeadTemplate from "@/components/general/HeadTemplate";
 import { PAGES } from "@/constants/constants";
 import { Button } from "@/components/ui/button";
+import { registerStudent } from "@/lib/api_helpers";
+import { StudentRegisterForm } from "@/types/auth";
+import { useRouter } from "next/router";
+import toast from "react-hot-toast";
+import PasswordStrength from "@/components/auth/PasswordStrength";
 
 const Signup = () => {
-  // const { push } = useRouter();
-  const [loading] = useState(false);
+  const { push } = useRouter();
+  const [loading, setLoading] = useState(false);
   const [showPassword, toggleShowPassword] = useToggle(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<StudentRegisterForm>({
     username: "",
     password: "",
   });
@@ -26,14 +30,19 @@ const Signup = () => {
   };
 
   const signUpUser = async () => {
-    // setLoading(true);
-    // const { error } = await createUser(formData);
-    // setLoading(false);
-    // if (error) {
-    //   toast.error(error);
-    //   return;
-    // }
-    // push(PAGES.dashboard);
+    setLoading(true);
+
+    const { data, error } = await registerStudent(formData);
+
+    setLoading(false);
+
+    if (error) {
+      toast.error(error);
+      return;
+    }
+
+    toast.success(data);
+    push(PAGES.student.login);
   };
 
   return (
@@ -70,6 +79,8 @@ const Signup = () => {
           </button>
         </div>
 
+        {formData.password && <PasswordStrength password={formData.password} />}
+
         <div className="mt-4 flex justify-between items-center flex-col lg:flex-row gap-2 text-sm">
           <p>
             Already have an account?{" "}
@@ -92,5 +103,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
-// export default alreadyLoggedIn(Signup);
+export default alreadyLoggedIn(Signup);

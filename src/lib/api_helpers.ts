@@ -1,6 +1,12 @@
 import { BASE_STAFF_URL, BASE_STUDENT_URL } from "@/constants/constants";
-import { isValidEmail } from "./utils";
-import { AuthData, StaffLoginForm, StaffRegisterForm } from "@/types/auth";
+import { checkPasswordStrength, isValidEmail } from "./utils";
+import {
+  AuthData,
+  StaffLoginForm,
+  StaffRegisterForm,
+  StudentLoginForm,
+  StudentRegisterForm,
+} from "@/types/auth";
 
 export const registerStaff = async (data: StaffRegisterForm) => {
   const { email, full_name, password, type } = data;
@@ -12,10 +18,10 @@ export const registerStaff = async (data: StaffRegisterForm) => {
   if (splitted_full_name.length < 2)
     return { data: null, error: "Please enter your full name." };
 
-  if (password.length < 8)
+  if (!checkPasswordStrength(password, true))
     return {
       data: null,
-      error: "Your password must be at least 8 characters long.",
+      error: "Please enter a valid password.",
     };
 
   try {
@@ -145,6 +151,80 @@ export const signOutUser = async (token: string, type: AuthData["type"]) => {
 
     localStorage.removeItem("auth-data");
     return { data: res.message + ".", error: null };
+  } catch (e) {
+    return { data: null, error: "A server error occured." };
+  }
+};
+
+export const registerStudent = async (data: StudentRegisterForm) => {
+  const { username, password } = data;
+
+  if (!username)
+    return {
+      data: null,
+      error: "Please enter your username.",
+    };
+
+  if (!checkPasswordStrength(password, true))
+    return {
+      data: null,
+      error: "Please enter a valid password.",
+    };
+
+  try {
+    const req = await fetch(BASE_STUDENT_URL + "/register", {
+      method: "POST",
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const res = (await req.json()) as any;
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: res.message + ".", error: null };
+  } catch (e) {
+    return { data: null, error: "A server error occured." };
+  }
+};
+
+export const loginStudent = async (data: StudentLoginForm) => {
+  const { username, password } = data;
+
+  if (!username)
+    return {
+      data: null,
+      error: "Please enter your username.",
+    };
+
+  if (!checkPasswordStrength(password, true))
+    return {
+      data: null,
+      error: "Please enter a valid password.",
+    };
+
+  try {
+    const req = await fetch(BASE_STUDENT_URL + "/login", {
+      method: "POST",
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const res = (await req.json()) as any;
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: res.data.token, error: null };
   } catch (e) {
     return { data: null, error: "A server error occured." };
   }

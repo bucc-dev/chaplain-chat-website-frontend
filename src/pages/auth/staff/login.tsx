@@ -11,9 +11,10 @@ import { loginStaff } from "@/lib/api_helpers";
 import { StaffLoginForm } from "@/types/auth";
 import toast from "react-hot-toast";
 import { alreadyLoggedIn } from "@/components/hoc/ProtectedRoute";
+import { useRouter } from "next/router";
 
 const Login = () => {
-  // const { push } = useRouter();
+  const { push } = useRouter();
   const [loading, setLoading] = useState(false);
   const [showPassword, toggleShowPassword] = useToggle(false);
   const [formData, setFormData] = useState<StaffLoginForm>({
@@ -42,9 +43,13 @@ const Login = () => {
     toast.success("Logged in.");
     localStorage.setItem(
       "auth-data",
-      JSON.stringify({ token: data, expires_at: Date.now() + 43_200_000 }) // sets the expiry time to be 12 hours from when it was generated
+      JSON.stringify({
+        token: data,
+        expires_at: Date.now() + 43_200_000, // sets the expiry time to be 12 hours from when it was generated
+        type: "official",
+      })
     );
-    // push(PAGES.staff.verify(formData.email));
+    push(PAGES.chat);
   };
 
   return (

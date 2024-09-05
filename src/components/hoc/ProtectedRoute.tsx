@@ -15,7 +15,7 @@ export const checkAuthentication = (ProtectedComponent: any) => {
 
     useEffect(() => {
       const auth_data: AuthData = JSON.parse(
-        localStorage.getItem("auth-data") || ""
+        localStorage.getItem("auth-data") || "{}"
       );
 
       // if the token has expired, push to login page
@@ -49,7 +49,7 @@ export const alreadyLoggedIn = (ProtectedComponent: () => JSX.Element) => {
 
     useEffect(() => {
       const auth_data: AuthData = JSON.parse(
-        localStorage.getItem("auth-data") || ""
+        localStorage.getItem("auth-data") || "{}"
       );
 
       // if the token has not expired, push to chat page
