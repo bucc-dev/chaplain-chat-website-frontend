@@ -4,7 +4,7 @@ import Link from "next/link";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import { useToggle } from "@/hooks/general";
 import { Input } from "@/components/ui/input";
-// import { alreadyLoggedIn } from "@/components/hoc/ProtectedRoute";
+import { alreadyLoggedIn } from "@/components/hoc/ProtectedRoute";
 import HeadTemplate from "@/components/general/HeadTemplate";
 import { PAGES } from "@/constants/constants";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -130,5 +130,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
-// export default alreadyLoggedIn(Signup);
+export default alreadyLoggedIn(Signup);

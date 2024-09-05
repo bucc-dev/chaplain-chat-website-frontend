@@ -13,3 +13,9 @@ export type StaffLoginForm = {
 export type PasswordStrengthProps = {
   password: string;
 };
+
+export type AuthData = {
+  token: string;
+  expires_at: number;
+  type: "student" | "official";
+};

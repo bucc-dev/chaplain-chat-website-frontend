@@ -1,19 +1,16 @@
 import { useState } from "react";
-// import toast from "react-hot-toast";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Link from "next/link";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import { useToggle } from "@/hooks/general";
 import { Input } from "@/components/ui/input";
-// import { PAGES } from "@/constants/constants";
-// import { alreadyLoggedIn } from "@/components/hoc/ProtectedRoute";
 import { Button } from "@/components/ui/button";
-// import { loginUser } from "@/lib/firebase";
 import HeadTemplate from "@/components/general/HeadTemplate";
 import { PAGES } from "@/constants/constants";
 import { loginStaff } from "@/lib/api_helpers";
 import { StaffLoginForm } from "@/types/auth";
 import toast from "react-hot-toast";
+import { alreadyLoggedIn } from "@/components/hoc/ProtectedRoute";
 
 const Login = () => {
   // const { push } = useRouter();
@@ -110,5 +107,4 @@ const Login = () => {
   );
 };
 
-export default Login;
-// export default alreadyLoggedIn(Login);
+export default alreadyLoggedIn(Login);

@@ -16,8 +16,6 @@ export const IMAGES = {
 };
 
 export const PAGES = {
-  base_url: "",
-
   staff: {
     login: "/auth/staff/login",
     signup: "/auth/staff/signup",
