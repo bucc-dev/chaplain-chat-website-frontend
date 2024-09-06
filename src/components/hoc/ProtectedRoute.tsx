@@ -10,7 +10,7 @@ import { AUTH_DATA } from "@/atoms/atoms";
 export const checkAuthentication = (ProtectedComponent: any) => {
   return function CheckIfTheUserIsLoggedIn(props: object) {
     const [isLoading, setIsLoading] = useState(true);
-    const setAuthToken = useSetRecoilState(AUTH_DATA);
+    const setAuthData = useSetRecoilState(AUTH_DATA);
     const { push } = useRouter();
 
     useEffect(() => {
@@ -28,7 +28,7 @@ export const checkAuthentication = (ProtectedComponent: any) => {
         return;
       }
 
-      setAuthToken({ token: auth_data.token, type: auth_data.type });
+      setAuthData({ token: auth_data.token, type: auth_data.type });
       setIsLoading(false);
     }, []);
 
@@ -44,7 +44,7 @@ export const checkAuthentication = (ProtectedComponent: any) => {
 export const alreadyLoggedIn = (ProtectedComponent: () => JSX.Element) => {
   return function StopLoggedInUsersAccessToAuthModals(props: object) {
     const [isLoading, setIsLoading] = useState(true);
-    const setAuthToken = useSetRecoilState(AUTH_DATA);
+    const setAuthData = useSetRecoilState(AUTH_DATA);
     const { push } = useRouter();
 
     useEffect(() => {
@@ -54,7 +54,7 @@ export const alreadyLoggedIn = (ProtectedComponent: () => JSX.Element) => {
 
       // if the token has not expired, push to chat page
       if (auth_data.expires_at > Date.now()) {
-        setAuthToken({ token: auth_data.token, type: auth_data.type });
+        setAuthData({ token: auth_data.token, type: auth_data.type });
 
         push(auth_data.type === "official" ? PAGES.chat : PAGES.chat);
         return;
