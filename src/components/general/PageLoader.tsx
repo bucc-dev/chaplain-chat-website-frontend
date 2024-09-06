@@ -9,7 +9,7 @@ const PageLoader = ({ type }: PageLoaderProps) => {
         type === "full" ? "h-screen" : "h-auto p-4"
       )}
     >
-      <div className="w-12 h-12 z-10 rounded-full border-4 border-t-main border-l-main border-r-main animate-spin" />
+      <div className="w-8 h-8 z-10 rounded-full border-2 border-t-main border-l-main border-r-main animate-spin" />
     </div>
   );
 };
