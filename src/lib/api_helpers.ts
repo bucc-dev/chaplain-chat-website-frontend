@@ -7,6 +7,7 @@ import {
   StudentLoginForm,
   StudentRegisterForm,
 } from "@/types/auth";
+import { StaffInfo, StudentInfo } from "@/types/chat";
 
 export const registerStaff = async (data: StaffRegisterForm) => {
   const { email, full_name, password, type } = data;
@@ -225,6 +226,97 @@ export const loginStudent = async (data: StudentLoginForm) => {
       return { data: null, error: res.message + "." };
 
     return { data: res.data.token, error: null };
+  } catch (e) {
+    return { data: null, error: "A server error occured." };
+  }
+};
+
+export const getInfo = async (token: string, type: AuthData["type"]) => {
+  const BASE_URL = type === "official" ? BASE_STAFF_URL : BASE_STUDENT_URL;
+
+  try {
+    const req = await fetch(BASE_URL + "/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const res = (await req.json()) as any;
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    const data: StudentInfo | StaffInfo =
+      type === "official" ? res.data.staff : res.data.student;
+
+    return { data, error: null };
+  } catch (e) {
+    return { data: null, error: "A server error occured." };
+  }
+};
+
+export const getStaffSections = async (token: string) => {
+  try {
+    const req = await fetch(BASE_STAFF_URL + "/getsections", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const res = (await req.json()) as any;
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: res.data, error: null };
+  } catch (e) {
+    return { data: null, error: "A server error occured." };
+  }
+};
+
+export const getConversations = async (
+  token: string,
+  type: AuthData["type"]
+) => {
+  const BASE_URL = type === "official" ? BASE_STAFF_URL : BASE_STUDENT_URL;
+
+  try {
+    const req = await fetch(BASE_URL + "/conversations", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const res = (await req.json()) as any;
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: res.data.conversations, error: null };
+  } catch (e) {
+    return { data: null, error: "A server error occured." };
+  }
+};
+
+export const startConversation = async (token: string, staff_id: string) => {
+  try {
+    const req = await fetch(BASE_STUDENT_URL + "/startconversation", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ staffId: staff_id }),
+    });
+    const res = (await req.json()) as any;
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: res.data.conversation, error: null };
   } catch (e) {
     return { data: null, error: "A server error occured." };
   }

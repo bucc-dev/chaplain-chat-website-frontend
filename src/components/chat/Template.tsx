@@ -10,6 +10,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { signOutUser } from "@/lib/api_helpers";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const DashboardTemplate = ({ children }: TemplateProps) => {
   const auth_data = useRecoilValue(AUTH_DATA);
@@ -44,19 +45,20 @@ const DashboardTemplate = ({ children }: TemplateProps) => {
             className="w-8"
             priority={true}
           /> */}
+          <Link href={PAGES.chat}>
+            <div className="flex gap-2 items-center justify-center">
+              <p className="font-medium">CHAT</p>
 
-          <div className="flex gap-2 items-center justify-center">
-            <p className="font-medium">CHAT</p>
-
-            <p className="text-xs md:text-sm bg-main text-white py-0.5 px-1.5 rounded-sm">
-              :{auth_data.type}:
-            </p>
-          </div>
+              <p className="text-xs md:text-sm bg-main text-white py-0.5 px-1.5 rounded-sm">
+                :{auth_data.type}:
+              </p>
+            </div>
+          </Link>
 
           <Button
             onClick={signOut}
             disabled={loading}
-            className="text-sm bg-transparent hover:bg-transparent text-black border-none shadow-none gap-2 px-0"
+            className="text-sm bg-transparent hover:bg-transparent text-black shadow-none px-0"
           >
             Sign out{" "}
             {loading && <AiOutlineLoading3Quarters className="animate-spin" />}
