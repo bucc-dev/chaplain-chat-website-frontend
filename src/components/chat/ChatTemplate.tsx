@@ -9,7 +9,7 @@ import { GoPaperAirplane } from "react-icons/go";
 import { useRecoilValue } from "recoil";
 import { io } from "socket.io-client";
 
-const socket = io(BASE_API_URL);
+const socket = io(BASE_API_URL.replace("/api", ""));
 
 const StudentChat = ({ convo }: { convo: ConversationWithMessageDetails }) => {
   const [message, setMessage] = useState("");
