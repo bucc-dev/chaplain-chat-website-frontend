@@ -42,7 +42,11 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
   useEffect(() => {
     scrollElement.current?.scrollIntoView({ behavior: "smooth" });
 
-    socket.on("message", (msg) => {
+    socket.on("connect_error", (msg) => {
+      // show an error message
+    });
+
+    socket.on("receiveMessage", (msg) => {
       setMessages((k) => [
         ...k,
         {
