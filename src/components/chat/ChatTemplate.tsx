@@ -13,8 +13,6 @@ import { GoPaperAirplane } from "react-icons/go";
 import { useRecoilValue } from "recoil";
 import { io } from "socket.io-client";
 
-const socket = io(BASE_API_URL.replace("/api", ""));
-
 const StudentChat = ({ convo, info }: ChatTemplateProps) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<
@@ -22,7 +20,11 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
   >(convo.messages);
   const scrollElement = useRef<HTMLSpanElement>(null);
   const { asPath } = useRouter();
-  const { type } = useRecoilValue(AUTH_DATA);
+  const { type, token } = useRecoilValue(AUTH_DATA);
+
+  const socket = io(BASE_API_URL.replace("/api", ""), {
+    auth: { token },
+  });
 
   const sendMessage = () => {
     if (!message) return;

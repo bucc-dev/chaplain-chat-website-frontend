@@ -54,6 +54,7 @@ const StartConversation = () => {
 };
 
 const OfficialComp = ({ o }: { o: Official }) => {
+  // const name = o.email;
   const name = o.firstname + " " + o.lastname;
   const { token } = useRecoilValue(AUTH_DATA);
   const [loading, setLoading] = useState(false);
