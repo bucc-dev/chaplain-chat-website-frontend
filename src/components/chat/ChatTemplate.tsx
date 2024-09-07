@@ -36,6 +36,19 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
       senderId: type === "official" ? convo.staff.id : convo.studentId,
     });
 
+    setMessages((k) => [
+      ...k,
+      {
+        id: "",
+        conversationId: asPath.split("/")[2],
+        senderId: type === "official" ? convo.staff.id : convo.studentId,
+        receiverId: type === "official" ? convo.studentId : convo.staff.id,
+        content: message,
+        timestamp: new Date(Date.now()).toISOString(),
+        status: "delivered",
+      },
+    ]);
+
     setMessage("");
   };
 
@@ -64,7 +77,7 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [socket]);
 
   return (
     <div className="h-[calc(100vh-6rem)] flex flex-col gap-4">
