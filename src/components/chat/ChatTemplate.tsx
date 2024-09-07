@@ -1,9 +1,13 @@
-import { INFO } from "@/atoms/atoms";
+import { AUTH_DATA } from "@/atoms/atoms";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BASE_API_URL } from "@/constants/constants";
 import { cn } from "@/lib/utils";
-import { ConversationWithMessageDetails } from "@/types/chat";
+import {
+  ChatTemplateProps,
+  ConversationWithMessageDetails,
+} from "@/types/chat";
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { GoPaperAirplane } from "react-icons/go";
 import { useRecoilValue } from "recoil";
@@ -11,18 +15,25 @@ import { io } from "socket.io-client";
 
 const socket = io(BASE_API_URL.replace("/api", ""));
 
-const StudentChat = ({ convo }: { convo: ConversationWithMessageDetails }) => {
+const StudentChat = ({ convo, info }: ChatTemplateProps) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<
     ConversationWithMessageDetails["messages"]
   >(convo.messages);
-  const info = useRecoilValue(INFO);
   const scrollElement = useRef<HTMLSpanElement>(null);
+  const { asPath } = useRouter();
+  const { type } = useRecoilValue(AUTH_DATA);
 
   const sendMessage = () => {
     if (!message) return;
 
-    alert(message);
+    socket.emit("sendMessage", {
+      receiverId: type === "official" ? convo.studentId : convo.staff.id,
+      content: message,
+      conversationId: asPath.split("/")[2],
+      senderId: type === "official" ? convo.staff.id : convo.studentId,
+    });
+
     setMessage("");
   };
 
@@ -30,7 +41,18 @@ const StudentChat = ({ convo }: { convo: ConversationWithMessageDetails }) => {
     scrollElement.current?.scrollIntoView({ behavior: "smooth" });
 
     socket.on("message", (msg) => {
-      setMessages((k) => [...k, msg]);
+      setMessages((k) => [
+        ...k,
+        {
+          id: "",
+          conversationId: asPath.split("/")[2],
+          senderId: type === "official" ? convo.staff.id : convo.studentId,
+          receiverId: type === "official" ? convo.studentId : convo.staff.id,
+          content: msg.content,
+          timestamp: msg.timestamp,
+          status: "delivered",
+        },
+      ]);
     });
 
     return () => {

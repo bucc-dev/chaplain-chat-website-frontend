@@ -4,16 +4,13 @@ import { PAGES } from "@/constants/constants";
 import PageLoader from "../general/PageLoader";
 import { AuthData } from "@/types/auth";
 import { useSetRecoilState } from "recoil";
-import { AUTH_DATA, INFO } from "@/atoms/atoms";
-import { getInfo } from "@/lib/api_helpers";
-import toast from "react-hot-toast";
+import { AUTH_DATA } from "@/atoms/atoms";
 
 // Check if user is logged in
 export const checkAuthentication = (ProtectedComponent: any) => {
   return function CheckIfTheUserIsLoggedIn(props: object) {
     const [isLoading, setIsLoading] = useState(true);
     const setAuthData = useSetRecoilState(AUTH_DATA);
-    const setInfo = useSetRecoilState(INFO);
     const { push } = useRouter();
 
     useEffect(() => {
@@ -27,20 +24,9 @@ export const checkAuthentication = (ProtectedComponent: any) => {
         return;
       }
 
-      getInfo(token, type).then(({ data, error }) => {
-        if (error) {
-          toast.error(error);
-          return;
-        }
-
-        setInfo(data);
-
-        setAuthData({ token, type });
-
-        push(PAGES.chat);
-      });
-
       setAuthData({ token, type });
+      push(PAGES.chat);
+
       setIsLoading(false);
     }, []);
 
@@ -57,7 +43,6 @@ export const alreadyLoggedIn = (ProtectedComponent: () => JSX.Element) => {
   return function StopLoggedInUsersAccessToAuthModals(props: object) {
     const [isLoading, setIsLoading] = useState(true);
     const setAuthData = useSetRecoilState(AUTH_DATA);
-    const setInfo = useSetRecoilState(INFO);
     const { push } = useRouter();
 
     useEffect(() => {
@@ -67,20 +52,9 @@ export const alreadyLoggedIn = (ProtectedComponent: () => JSX.Element) => {
 
       // if the token has not expired, push to chat page
       if (expires_at > Date.now()) {
-        getInfo(token, type).then(({ data, error }) => {
-          if (error) {
-            toast.error(error);
-            return;
-          }
+        setAuthData({ token, type });
 
-          setInfo(data);
-
-          setAuthData({ token, type });
-
-          push(PAGES.chat);
-        });
-
-        return;
+        push(PAGES.chat);
       }
 
       setIsLoading(false);

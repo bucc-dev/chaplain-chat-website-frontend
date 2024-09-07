@@ -67,3 +67,8 @@ export type Message = {
   timestamp: string;
   status: string;
 };
+
+export type ChatTemplateProps = {
+  convo: ConversationWithMessageDetails;
+  info: StudentInfo | StaffInfo | null;
+};

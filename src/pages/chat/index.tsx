@@ -1,4 +1,4 @@
-import { AUTH_DATA, INFO } from "@/atoms/atoms";
+import { AUTH_DATA } from "@/atoms/atoms";
 import { useRecoilValue } from "recoil";
 import { StaffInfo, StudentInfo } from "@/types/chat";
 import StaffInformation from "@/components/chat/StaffInformation";
@@ -9,10 +9,34 @@ import { PAGES } from "@/constants/constants";
 import { FiPlus } from "react-icons/fi";
 import Conversations from "@/components/chat/Conversations";
 import { cn } from "@/lib/utils";
+import { getInfo } from "@/lib/api_helpers";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import PageLoader from "@/components/general/PageLoader";
 
 const Chat = () => {
-  const { type } = useRecoilValue(AUTH_DATA);
-  const info = useRecoilValue(INFO);
+  const { type, token } = useRecoilValue(AUTH_DATA);
+  const [loading, setLoading] = useState(true);
+  const [info, setInfo] = useState<StudentInfo | StaffInfo | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+
+      const { data, error } = await getInfo(token, type);
+
+      setLoading(false);
+
+      if (error) {
+        toast.error(error);
+        return;
+      }
+
+      setInfo(data);
+    })();
+  }, []);
+
+  if (loading) return <PageLoader type="small" />;
 
   return (
     <>

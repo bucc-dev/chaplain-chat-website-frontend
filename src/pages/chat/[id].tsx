@@ -2,7 +2,11 @@ import { AUTH_DATA } from "@/atoms/atoms";
 import ChatTemplate from "@/components/chat/ChatTemplate";
 import PageLoader from "@/components/general/PageLoader";
 import { getConversation } from "@/lib/api_helpers";
-import { ConversationWithMessageDetails } from "@/types/chat";
+import {
+  ConversationWithMessageDetails,
+  StaffInfo,
+  StudentInfo,
+} from "@/types/chat";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -16,6 +20,7 @@ const ChaplainChat = () => {
   const [loading, setLoading] = useState(true);
   const [conversation, setConversation] =
     useState<ConversationWithMessageDetails | null>(null);
+  const [info, setInfo] = useState<StudentInfo | StaffInfo | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -30,14 +35,14 @@ const ChaplainChat = () => {
         return;
       }
 
-      // console.log(data);
-      setConversation(data);
+      setConversation(data?.conversation);
+      if (data) setInfo(data.info);
     })();
   }, [id]);
 
   if (loading) return <PageLoader type="small" />;
 
-  return <ChatTemplate convo={conversation!} />;
+  return <ChatTemplate convo={conversation!} info={info} />;
 };
 
 export default ChaplainChat;

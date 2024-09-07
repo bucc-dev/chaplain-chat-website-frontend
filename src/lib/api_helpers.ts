@@ -339,10 +339,17 @@ export const getConversation = async (
     });
     const res = (await req.json()) as any;
 
+    const { data, error } = await getInfo(token, type);
+
+    if (error) return { data: null, error };
+
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
 
-    return { data: res.data.conversation, error: null };
+    return {
+      data: { conversation: res.data.conversation, info: data },
+      error: null,
+    };
   } catch (e) {
     return { data: null, error: "A server error occured." };
   }
