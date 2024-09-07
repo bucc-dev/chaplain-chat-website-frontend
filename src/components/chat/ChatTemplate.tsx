@@ -52,12 +52,14 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
   useEffect(() => {
     scrollElement.current?.scrollIntoView({ behavior: "smooth" });
 
-    setSocket(
-      io(BASE_API_URL.replace("/api", ""), {
-        auth: { token },
-      })
-    );
+    const s = io(BASE_API_URL.replace("/api", ""), {
+      auth: { token },
+    });
 
+    setSocket(s);
+  }, []);
+
+  useEffect(() => {
     socket.on("connect_error", (msg: any) => {
       // show an error message
     });
@@ -80,7 +82,7 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [socket]);
 
   return (
     <div className="h-[calc(100vh-6rem)] flex flex-col gap-4">
