@@ -38,7 +38,7 @@ const ChaplainChat = () => {
       setConversation(data?.conversation);
       if (data) setInfo(data.info);
     })();
-  }, [id]);
+  }, [id, token, type]);
 
   if (loading) return <PageLoader type="small" />;
 
