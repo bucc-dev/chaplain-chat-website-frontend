@@ -34,10 +34,36 @@ export type Official = {
   type: AuthData["type"];
 };
 
-export type Conversation = {
+export type ConversationWithMessageId = {
   id: string;
   studentId: string;
-  staffId: string;
   messages: string[];
   timestamp: string;
+  staff: {
+    firstname: string;
+    id: string;
+    lastname: string;
+  };
+};
+
+export type ConversationWithMessageDetails = {
+  id: string;
+  studentId: string;
+  messages: Message[];
+  timestamp: string;
+  staff: {
+    firstname: string;
+    id: string;
+    lastname: string;
+  };
+};
+
+export type Message = {
+  id: string;
+  conversationId: string;
+  senderId: string;
+  receiverId: string;
+  content: string;
+  timestamp: string;
+  status: string;
 };

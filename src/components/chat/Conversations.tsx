@@ -1,19 +1,22 @@
 import { AUTH_DATA } from "@/atoms/atoms";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PAGES } from "@/constants/constants";
-import { getConversations } from "@/lib/api_helpers";
+import { getConversations, getStaffSections } from "@/lib/api_helpers";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { GoTriangleRight } from "react-icons/go";
 import { useRecoilValue } from "recoil";
 import PageLoader from "../general/PageLoader";
-import { Conversation } from "@/types/chat";
+import { ConversationWithMessageId, StaffSections } from "@/types/chat";
+import { capitalize } from "@/lib/utils";
 
 const Conversations = () => {
   const { token, type } = useRecoilValue(AUTH_DATA);
   const [loading, setLoading] = useState(true);
-  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [conversations, setConversations] = useState<
+    ConversationWithMessageId[]
+  >([]);
 
   useEffect(() => {
     (async () => {
@@ -32,7 +35,7 @@ const Conversations = () => {
     })();
   }, []);
 
-  console.log("66da11f75ebd7f981bcc5301".split("").filter(Number).join(""));
+  // console.log("66da11f75ebd7f981bcc5301".split("").filter(Number).join(""));
 
   if (loading) return <PageLoader type="small" />;
 
@@ -44,7 +47,7 @@ const Conversations = () => {
             <Avatar>
               <AvatarImage
                 src={`https://api.dicebear.com/9.x/lorelei-neutral/svg?seed=${
-                  type === "official" ? c.studentId : c.staffId
+                  type === "official" ? c.studentId : c.staff.id
                 }`}
                 alt="avatar"
                 className="border-2 border-main rounded-full"
@@ -52,7 +55,15 @@ const Conversations = () => {
               <AvatarFallback>ST</AvatarFallback>
             </Avatar>
 
-            <p className="font-medium mr-auto">Student {c.studentId}</p>
+            {type === "official" && (
+              <p className="font-medium mr-auto">Student {c.studentId}</p>
+            )}
+
+            {type === "student" && (
+              <p className="font-medium mr-auto">
+                {c.staff.firstname} {c.staff.lastname}
+              </p>
+            )}
 
             <GoTriangleRight />
           </div>

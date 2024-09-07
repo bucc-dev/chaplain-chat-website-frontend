@@ -1,12 +1,21 @@
+import { AUTH_DATA, INFO } from "@/atoms/atoms";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MOCK_CHAT } from "@/constants/constants";
 import { cn } from "@/lib/utils";
+import {
+  ConversationWithMessageDetails,
+  StaffInfo,
+  StudentInfo,
+} from "@/types/chat";
 import { useEffect, useRef, useState } from "react";
 import { GoPaperAirplane } from "react-icons/go";
+import { TfiControlShuffle } from "react-icons/tfi";
+import { useRecoilValue } from "recoil";
 
-const StudentChat = ({ sender }: { sender: "STUDENT" | "CHAPLAIN" }) => {
+const StudentChat = ({ convo }: { convo: ConversationWithMessageDetails }) => {
   const [message, setMessage] = useState("");
+  const info = useRecoilValue(INFO);
   const scrollElement = useRef<HTMLSpanElement>(null);
 
   const sendMessage = () => {
@@ -23,7 +32,7 @@ const StudentChat = ({ sender }: { sender: "STUDENT" | "CHAPLAIN" }) => {
   return (
     <div className="h-[calc(100vh-6rem)] flex flex-col gap-4">
       <div className="w-full overflow-y-scroll h-full max-h-[calc(100vh-7rem)] flex flex-col gap-2">
-        {MOCK_CHAT.map((m, i) => {
+        {convo.messages.map((m, i) => {
           const date_time = new Date(m.timestamp).toLocaleString();
 
           return (
@@ -31,24 +40,24 @@ const StudentChat = ({ sender }: { sender: "STUDENT" | "CHAPLAIN" }) => {
               key={i}
               className={cn(
                 "w-full max-w-sm",
-                m.sender === "Bob" ? "self-start" : "self-end"
+                m.receiverId === info?.id ? "self-start" : "self-end"
               )}
             >
               <p
                 className={cn(
                   "p-3 w-full mb-1",
-                  m.sender === "Bob"
+                  m.receiverId === info?.id
                     ? "self-start bg-gray-100 rounded-e-xl rounded-t-xl"
                     : "self-end bg-main text-white rounded-s-xl rounded-t-xl"
                 )}
               >
-                {m.message}
+                {m.content}
               </p>
 
               <p
                 className={cn(
                   "text-xs text-gray-400 w-full",
-                  m.sender === "Bob" ? "text-left" : "text-right"
+                  m.receiverId === info?.id ? "text-left" : "text-right"
                 )}
               >
                 {date_time}

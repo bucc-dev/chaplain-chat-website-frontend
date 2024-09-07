@@ -58,7 +58,7 @@ const DashboardTemplate = ({ children }: TemplateProps) => {
           <Button
             onClick={signOut}
             disabled={loading}
-            className="text-sm bg-transparent hover:bg-transparent text-black shadow-none px-0"
+            className="text-sm bg-transparent hover:bg-transparent text-black shadow-none px-0 gap-2"
           >
             Sign out{" "}
             {loading && <AiOutlineLoading3Quarters className="animate-spin" />}

@@ -44,7 +44,7 @@ const StartConversation = () => {
     })();
   }, []);
 
-  //   if (loading) return <PageLoader type="small" />;
+  if (loading) return <PageLoader type="small" />;
 
   return (
     <div className="flex flex-col pb-4">

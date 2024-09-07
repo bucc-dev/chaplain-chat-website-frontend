@@ -321,3 +321,29 @@ export const startConversation = async (token: string, staff_id: string) => {
     return { data: null, error: "A server error occured." };
   }
 };
+
+export const getConversation = async (
+  token: string,
+  type: AuthData["type"],
+  id: string
+) => {
+  const BASE_URL = type === "official" ? BASE_STAFF_URL : BASE_STUDENT_URL;
+
+  try {
+    const req = await fetch(BASE_URL + `/conversations/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const res = (await req.json()) as any;
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: res.data.conversation, error: null };
+  } catch (e) {
+    return { data: null, error: "A server error occured." };
+  }
+};

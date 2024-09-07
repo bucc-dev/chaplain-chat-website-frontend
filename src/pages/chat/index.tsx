@@ -1,4 +1,4 @@
-import { AUTH_DATA } from "@/atoms/atoms";
+import { AUTH_DATA, INFO } from "@/atoms/atoms";
 import ChatTemplate from "@/components/chat/ChatTemplate";
 import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
@@ -16,28 +16,8 @@ import Conversations from "@/components/chat/Conversations";
 import { cn } from "@/lib/utils";
 
 const Chat = () => {
-  const { token, type } = useRecoilValue(AUTH_DATA);
-  const [loading, setLoading] = useState(true);
-  const [info, setInfo] = useState<StudentInfo | StaffInfo | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      setLoading(true);
-
-      const { data, error } = await getInfo(token, type);
-
-      setLoading(false);
-
-      if (error) {
-        toast.error(error);
-        return;
-      }
-
-      setInfo(data);
-    })();
-  }, []);
-
-  if (loading) return <PageLoader type="small" />;
+  const { type } = useRecoilValue(AUTH_DATA);
+  const info = useRecoilValue(INFO);
 
   return (
     <>

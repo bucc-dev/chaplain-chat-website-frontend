@@ -4,31 +4,43 @@ import { PAGES } from "@/constants/constants";
 import PageLoader from "../general/PageLoader";
 import { AuthData } from "@/types/auth";
 import { useSetRecoilState } from "recoil";
-import { AUTH_DATA } from "@/atoms/atoms";
+import { AUTH_DATA, INFO } from "@/atoms/atoms";
+import { getInfo } from "@/lib/api_helpers";
+import toast from "react-hot-toast";
 
 // Check if user is logged in
 export const checkAuthentication = (ProtectedComponent: any) => {
   return function CheckIfTheUserIsLoggedIn(props: object) {
     const [isLoading, setIsLoading] = useState(true);
     const setAuthData = useSetRecoilState(AUTH_DATA);
+    const setInfo = useSetRecoilState(INFO);
     const { push } = useRouter();
 
     useEffect(() => {
-      const auth_data: AuthData = JSON.parse(
+      const { expires_at, token, type }: AuthData = JSON.parse(
         localStorage.getItem("auth-data") || "{}"
       );
 
       // if the token has expired, push to login page
-      if (auth_data.expires_at <= Date.now()) {
-        push(
-          auth_data.type === "official"
-            ? PAGES.staff.login
-            : PAGES.student.login
-        );
+      if (expires_at <= Date.now()) {
+        push(type === "official" ? PAGES.staff.login : PAGES.student.login);
         return;
       }
 
-      setAuthData({ token: auth_data.token, type: auth_data.type });
+      getInfo(token, type).then(({ data, error }) => {
+        if (error) {
+          toast.error(error);
+          return;
+        }
+
+        setInfo(data);
+
+        setAuthData({ token, type });
+
+        push(PAGES.chat);
+      });
+
+      setAuthData({ token, type });
       setIsLoading(false);
     }, []);
 
@@ -45,18 +57,29 @@ export const alreadyLoggedIn = (ProtectedComponent: () => JSX.Element) => {
   return function StopLoggedInUsersAccessToAuthModals(props: object) {
     const [isLoading, setIsLoading] = useState(true);
     const setAuthData = useSetRecoilState(AUTH_DATA);
+    const setInfo = useSetRecoilState(INFO);
     const { push } = useRouter();
 
     useEffect(() => {
-      const auth_data: AuthData = JSON.parse(
+      const { expires_at, token, type }: AuthData = JSON.parse(
         localStorage.getItem("auth-data") || "{}"
       );
 
       // if the token has not expired, push to chat page
-      if (auth_data.expires_at > Date.now()) {
-        setAuthData({ token: auth_data.token, type: auth_data.type });
+      if (expires_at > Date.now()) {
+        getInfo(token, type).then(({ data, error }) => {
+          if (error) {
+            toast.error(error);
+            return;
+          }
 
-        push(auth_data.type === "official" ? PAGES.chat : PAGES.chat);
+          setInfo(data);
+
+          setAuthData({ token, type });
+
+          push(PAGES.chat);
+        });
+
         return;
       }
 

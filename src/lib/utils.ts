@@ -21,8 +21,11 @@ export const checkPasswordStrength = (
   return { hasMinChar, hasNum, hasSym, hasUpp };
 };
 
-export const capitalize = (text: string) =>
-  text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+export const capitalize = (text: string | undefined) => {
+  if (!text) return "";
+
+  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+};
 
 export const getNumberFromId = (id: string) => {
   return id.split("").map(Number);
