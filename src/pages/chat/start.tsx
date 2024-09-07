@@ -6,12 +6,10 @@ import { PAGES } from "@/constants/constants";
 import { getStaffSections, startConversation } from "@/lib/api_helpers";
 import { capitalize } from "@/lib/utils";
 import { Official, StaffSections } from "@/types/chat";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { GoTriangleRight } from "react-icons/go";
 import { useRecoilValue } from "recoil";
 
 const StartConversation = () => {

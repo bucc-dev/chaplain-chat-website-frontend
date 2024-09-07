@@ -1,15 +1,14 @@
 import { AUTH_DATA } from "@/atoms/atoms";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PAGES } from "@/constants/constants";
-import { getConversations, getStaffSections } from "@/lib/api_helpers";
+import { getConversations } from "@/lib/api_helpers";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { GoTriangleRight } from "react-icons/go";
 import { useRecoilValue } from "recoil";
 import PageLoader from "../general/PageLoader";
-import { ConversationWithMessageId, StaffSections } from "@/types/chat";
-import { capitalize } from "@/lib/utils";
+import { ConversationWithMessageId } from "@/types/chat";
 
 const Conversations = () => {
   const { token, type } = useRecoilValue(AUTH_DATA);

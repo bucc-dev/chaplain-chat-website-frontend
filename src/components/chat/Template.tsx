@@ -1,7 +1,6 @@
 import { TemplateProps } from "@/types/chat";
-import Image from "next/image";
 import { checkAuthentication } from "../hoc/ProtectedRoute";
-import { IMAGES, PAGES } from "@/constants/constants";
+import { PAGES } from "@/constants/constants";
 import { AUTH_DATA } from "@/atoms/atoms";
 import { useRecoilValue } from "recoil";
 import { Button } from "../ui/button";

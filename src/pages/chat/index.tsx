@@ -1,10 +1,5 @@
 import { AUTH_DATA, INFO } from "@/atoms/atoms";
-import ChatTemplate from "@/components/chat/ChatTemplate";
 import { useRecoilValue } from "recoil";
-import { useEffect, useState } from "react";
-import { getInfo } from "@/lib/api_helpers";
-import toast from "react-hot-toast";
-import PageLoader from "@/components/general/PageLoader";
 import { StaffInfo, StudentInfo } from "@/types/chat";
 import StaffInformation from "@/components/chat/StaffInformation";
 import StudentInformation from "@/components/chat/StudentInformation";

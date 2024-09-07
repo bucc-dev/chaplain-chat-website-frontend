@@ -1,16 +1,10 @@
-import { AUTH_DATA, INFO } from "@/atoms/atoms";
+import { INFO } from "@/atoms/atoms";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { MOCK_CHAT } from "@/constants/constants";
 import { cn } from "@/lib/utils";
-import {
-  ConversationWithMessageDetails,
-  StaffInfo,
-  StudentInfo,
-} from "@/types/chat";
+import { ConversationWithMessageDetails } from "@/types/chat";
 import { useEffect, useRef, useState } from "react";
 import { GoPaperAirplane } from "react-icons/go";
-import { TfiControlShuffle } from "react-icons/tfi";
 import { useRecoilValue } from "recoil";
 
 const StudentChat = ({ convo }: { convo: ConversationWithMessageDetails }) => {
