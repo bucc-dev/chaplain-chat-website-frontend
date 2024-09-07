@@ -1,14 +1,21 @@
 import { INFO } from "@/atoms/atoms";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { BASE_API_URL } from "@/constants/constants";
 import { cn } from "@/lib/utils";
 import { ConversationWithMessageDetails } from "@/types/chat";
 import { useEffect, useRef, useState } from "react";
 import { GoPaperAirplane } from "react-icons/go";
 import { useRecoilValue } from "recoil";
+import { io } from "socket.io-client";
+
+const socket = io(BASE_API_URL);
 
 const StudentChat = ({ convo }: { convo: ConversationWithMessageDetails }) => {
   const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState<
+    ConversationWithMessageDetails["messages"]
+  >(convo.messages);
   const info = useRecoilValue(INFO);
   const scrollElement = useRef<HTMLSpanElement>(null);
 
@@ -21,12 +28,20 @@ const StudentChat = ({ convo }: { convo: ConversationWithMessageDetails }) => {
 
   useEffect(() => {
     scrollElement.current?.scrollIntoView({ behavior: "smooth" });
+
+    socket.on("message", (msg) => {
+      setMessages((k) => [...k, msg]);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   return (
     <div className="h-[calc(100vh-6rem)] flex flex-col gap-4">
       <div className="w-full overflow-y-scroll h-full max-h-[calc(100vh-7rem)] flex flex-col gap-2">
-        {convo.messages.map((m, i) => {
+        {messages.map((m, i) => {
           const date_time = new Date(m.timestamp).toLocaleString();
 
           return (

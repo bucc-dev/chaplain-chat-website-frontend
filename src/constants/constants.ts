@@ -1,6 +1,6 @@
 export const BASE_URL = "https://chaplaincy-helpdesk.vercel.app";
 
-const BASE_API_URL = "https://chaplain-backend-test.onrender.com/api";
+export const BASE_API_URL = "https://chaplain-backend-test.onrender.com/api";
 export const BASE_STAFF_URL = `${BASE_API_URL}/staffs`;
 export const BASE_STUDENT_URL = `${BASE_API_URL}/students`;
 
