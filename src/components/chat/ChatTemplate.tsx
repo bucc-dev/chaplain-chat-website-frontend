@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { GoPaperAirplane } from "react-icons/go";
 import { useRecoilValue } from "recoil";
-import { io, Socket } from "socket.io-client";
+import { io } from "socket.io-client";
 
 const StudentChat = ({ convo, info }: ChatTemplateProps) => {
   const [message, setMessage] = useState("");
@@ -21,7 +21,7 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
   const scrollElement = useRef<HTMLSpanElement>(null);
   const { asPath } = useRouter();
   const { type, token } = useRecoilValue(AUTH_DATA);
-  let socket: any;
+  const [socket, setSocket] = useState<any>();
 
   const sendMessage = () => {
     if (!message) return;
@@ -52,15 +52,17 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
   useEffect(() => {
     scrollElement.current?.scrollIntoView({ behavior: "smooth" });
 
-    socket = io(BASE_API_URL.replace("/api", ""), {
-      auth: { token },
-    });
+    setSocket(
+      io(BASE_API_URL.replace("/api", ""), {
+        auth: { token },
+      })
+    );
 
-    socket.on("connect_error", (msg) => {
+    socket.on("connect_error", (msg: any) => {
       // show an error message
     });
 
-    socket.on("receiveMessage", (msg) => {
+    socket.on("receiveMessage", (msg: any) => {
       setMessages((k) => [
         ...k,
         {
