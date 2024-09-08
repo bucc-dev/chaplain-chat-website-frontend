@@ -23,11 +23,11 @@ const Home = () => {
               Talk to the chaplain
             </Button>
           </Link>
-          <Link href={PAGES.staff.login} className="w-full max-w-[15rem]">
+          {/* <Link href={PAGES.staff.login} className="w-full max-w-[15rem]">
             <Button className="bg-main hover:bg-main/90 w-full">
               Staff login
             </Button>
-          </Link>
+          </Link> */}
         </div>
       </div>
 
