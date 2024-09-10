@@ -26,17 +26,23 @@ const ChaplainChat = () => {
     (async () => {
       setLoading(true);
 
-      const { data, error } = await getConversation(token, type, id as string);
+      if (id) {
+        const { data, error } = await getConversation(
+          token,
+          type,
+          id as string
+        );
 
-      setLoading(false);
+        setLoading(false);
 
-      if (error) {
-        toast.error(error);
-        return;
+        if (error) {
+          toast.error(error);
+          return;
+        }
+
+        setConversation(data?.conversation);
+        if (data) setInfo(data.info);
       }
-
-      setConversation(data?.conversation);
-      if (data) setInfo(data.info);
     })();
   }, [id, token, type]);
 
