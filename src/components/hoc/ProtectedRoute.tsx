@@ -25,7 +25,7 @@ export const checkAuthentication = (ProtectedComponent: any) => {
       }
 
       setAuthData({ token, type });
-      push(PAGES.chat);
+      // push(PAGES.chat);
 
       setIsLoading(false);
     }, []);
