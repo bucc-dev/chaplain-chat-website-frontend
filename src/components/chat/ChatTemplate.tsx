@@ -60,28 +60,30 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
   }, []);
 
   useEffect(() => {
-    socket.on("connect_error", (msg: any) => {
-      console.log(msg)
-    });
+    if (socket) {
+      socket.on("connect_error", (msg: any) => {
+        console.log(msg);
+      });
 
-    socket.on("receiveMessage", (msg: any) => {
-      setMessages((k) => [
-        ...k,
-        {
-          id: "",
-          conversationId: asPath.split("/")[2],
-          senderId: type === "official" ? convo.staff.id : convo.studentId,
-          receiverId: type === "official" ? convo.studentId : convo.staff.id,
-          content: msg.content,
-          timestamp: msg.timestamp,
-          status: "delivered",
-        },
-      ]);
-    });
+      socket.on("receiveMessage", (msg: any) => {
+        setMessages((k) => [
+          ...k,
+          {
+            id: "",
+            conversationId: asPath.split("/")[2],
+            senderId: type === "official" ? convo.staff.id : convo.studentId,
+            receiverId: type === "official" ? convo.studentId : convo.staff.id,
+            content: msg.content,
+            timestamp: msg.timestamp,
+            status: "delivered",
+          },
+        ]);
+      });
 
-    return () => {
-      socket.disconnect();
-    };
+      return () => {
+        socket.disconnect();
+      };
+    }
   }, [socket]);
 
   return (
