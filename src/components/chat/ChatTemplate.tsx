@@ -61,7 +61,7 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
 
   useEffect(() => {
     socket.on("connect_error", (msg: any) => {
-      // show an error message
+      console.log(msg)
     });
 
     socket.on("receiveMessage", (msg: any) => {

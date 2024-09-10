@@ -40,7 +40,7 @@ const StartConversation = () => {
 
       setSections(data);
     })();
-  }, []);
+  }, [token, type]);
 
   if (loading) return <PageLoader type="small" />;
 

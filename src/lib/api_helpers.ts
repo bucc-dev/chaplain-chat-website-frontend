@@ -45,8 +45,8 @@ export const registerStaff = async (data: StaffRegisterForm) => {
       return { data: null, error: res.message + "." };
 
     return { data: "An OTP has been sent to your email.", error: null };
-  } catch (e) {
-    return { data: null, error: "A server error occured." };
+  } catch (e: unknown) {
+    return { data: null, error: "A server error occured.", message:e };
   }
 };
 
@@ -79,8 +79,8 @@ export const loginStaff = async (data: StaffLoginForm) => {
       return { data: null, error: res.message + "." };
 
     return { data: res.data.token, error: null };
-  } catch (e) {
-    return { data: null, error: "A server error occured." };
+  } catch (e:unknown) {
+    return { data: null, error: "A server error occurred.", message:e };
   }
 };
 
@@ -106,8 +106,8 @@ export const verifyOtp = async (code: string, email: string) => {
       return { data: null, error: res.message + "." };
 
     return { data: "OTP has been confirmed.", error: null };
-  } catch (e) {
-    return { data: null, error: "A server error occured." };
+  } catch (e:unknown) {
+    return { data: null, error: "A server error occurred.", message:e };
   }
 };
 
@@ -129,8 +129,8 @@ export const resendOtp = async (email: string) => {
       return { data: null, error: res.message + "." };
 
     return { data: "Another OTP has been sent to your email.", error: null };
-  } catch (e) {
-    return { data: null, error: "A server error occured." };
+  } catch (e:unknown) {
+    return { data: null, error: "A server error occurred.", message:e };
   }
 };
 
@@ -152,8 +152,8 @@ export const signOutUser = async (token: string, type: AuthData["type"]) => {
 
     localStorage.removeItem("auth-data");
     return { data: res.message + ".", error: null };
-  } catch (e) {
-    return { data: null, error: "A server error occured." };
+  } catch (e:unknown) {
+    return { data: null, error: "A server error occurred.", message:e };
   }
 };
 
@@ -189,8 +189,8 @@ export const registerStudent = async (data: StudentRegisterForm) => {
       return { data: null, error: res.message + "." };
 
     return { data: res.message + ".", error: null };
-  } catch (e) {
-    return { data: null, error: "A server error occured." };
+  } catch (e:unknown) {
+    return { data: null, error: "A server error occurred.", message:e };
   }
 };
 
@@ -226,8 +226,8 @@ export const loginStudent = async (data: StudentLoginForm) => {
       return { data: null, error: res.message + "." };
 
     return { data: res.data.token, error: null };
-  } catch (e) {
-    return { data: null, error: "A server error occured." };
+  } catch (e:unknown) {
+    return { data: null, error: "A server error occurred.", message:e };
   }
 };
 
@@ -251,8 +251,8 @@ export const getInfo = async (token: string, type: AuthData["type"]) => {
       type === "official" ? res.data.staff : res.data.student;
 
     return { data, error: null };
-  } catch (e) {
-    return { data: null, error: "A server error occured." };
+  } catch (e: unknown) {
+    return { data: null, error: "A server error occured.", message:e };
   }
 };
 
@@ -271,8 +271,8 @@ export const getStaffSections = async (token: string) => {
       return { data: null, error: res.message + "." };
 
     return { data: res.data, error: null };
-  } catch (e) {
-    return { data: null, error: "A server error occured." };
+  } catch (e:unknown) {
+    return { data: null, error: "A server error occurred.", message:e };
   }
 };
 
@@ -296,8 +296,8 @@ export const getConversations = async (
       return { data: null, error: res.message + "." };
 
     return { data: res.data.conversations, error: null };
-  } catch (e) {
-    return { data: null, error: "A server error occured." };
+  } catch (e:unknown) {
+    return { data: null, error: "A server error occured.", message:e };
   }
 };
 
@@ -317,8 +317,8 @@ export const startConversation = async (token: string, staff_id: string) => {
       return { data: null, error: res.message + "." };
 
     return { data: res.data.conversation, error: null };
-  } catch (e) {
-    return { data: null, error: "A server error occured." };
+  } catch (e:unknown) {
+    return { data: null, error: "A server error occured.", message:e };
   }
 };
 
@@ -350,7 +350,7 @@ export const getConversation = async (
       data: { conversation: res.data.conversation, info: data },
       error: null,
     };
-  } catch (e) {
-    return { data: null, error: "A server error occured." };
+  } catch (e:unknown) {
+    return { data: null, error: "A server error occured.", message:e };
   }
 };

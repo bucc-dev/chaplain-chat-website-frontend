@@ -94,7 +94,7 @@ const Login = () => {
             </Link>
           </p>
 
-          <Link href="" className="text-main">
+         <Link href="" className="text-main">
             Forgot password?
           </Link>
         </div> */}
