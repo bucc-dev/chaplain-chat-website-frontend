@@ -43,6 +43,7 @@ export type ConversationWithMessageId = {
     firstname: string;
     id: string;
     lastname: string;
+    type: string;
   };
 };
 
@@ -55,6 +56,7 @@ export type ConversationWithMessageDetails = {
     firstname: string;
     id: string;
     lastname: string;
+    type: string;
   };
 };
 

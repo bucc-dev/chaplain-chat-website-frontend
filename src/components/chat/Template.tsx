@@ -10,6 +10,7 @@ import { signOutUser } from "@/lib/api_helpers";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import RantDialog from "./Rant";
 
 const DashboardTemplate = ({ children }: TemplateProps) => {
   const auth_data = useRecoilValue(AUTH_DATA);
@@ -44,7 +45,7 @@ const DashboardTemplate = ({ children }: TemplateProps) => {
             className="w-8"
             priority={true}
           /> */}
-          <Link href={PAGES.chat}>
+          <Link href={PAGES.chat} className="mr-auto">
             <div className="flex gap-2 items-center justify-center">
               <p className="font-medium">CHAT</p>
 
@@ -53,6 +54,8 @@ const DashboardTemplate = ({ children }: TemplateProps) => {
               </p>
             </div>
           </Link>
+
+          <RantDialog />
 
           <Button
             onClick={signOut}
