@@ -379,3 +379,23 @@ export const saveRant = async (token: string, content: string) => {
     return { data: null, error: "A server error occured.", message: e };
   }
 };
+
+export const getRants = async (token: string) => {
+  try {
+    const req = await fetch(BASE_API_URL + "/rants/all", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const res = (await req.json()) as any;
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: res.data.rants, error: null };
+  } catch (e: unknown) {
+    return { data: null, error: "A server error occured.", message: e };
+  }
+};

@@ -74,3 +74,11 @@ export type ChatTemplateProps = {
   convo: ConversationWithMessageDetails;
   info: StudentInfo | StaffInfo | null;
 };
+
+export type Rant = {
+  _id: string;
+  studentId: string;
+  content: string;
+  timestamp: string;
+  __v: number;
+};

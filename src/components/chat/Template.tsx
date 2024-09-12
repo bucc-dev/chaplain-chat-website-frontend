@@ -10,7 +10,7 @@ import { signOutUser } from "@/lib/api_helpers";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import RantDialog from "./Rant";
+import NewRant from "./NewRant";
 
 const DashboardTemplate = ({ children }: TemplateProps) => {
   const { token, type } = useRecoilValue(AUTH_DATA);
@@ -55,7 +55,15 @@ const DashboardTemplate = ({ children }: TemplateProps) => {
             </div>
           </Link>
 
-          {type === "student" && <RantDialog />}
+          {type === "student" ? (
+            <NewRant />
+          ) : (
+            <Link href={PAGES.rants}>
+              <button className="text-xs md:text-sm bg-main text-white py-0.5 px-3 rounded-sm cursor-pointer">
+                Rants
+              </button>
+            </Link>
+          )}
 
           <Button
             onClick={signOut}

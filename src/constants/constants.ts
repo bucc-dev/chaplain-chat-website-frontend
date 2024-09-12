@@ -27,6 +27,7 @@ export const PAGES = {
   home: "/",
   chat: "/chat",
   start_chat: "/chat/start",
+  rants: "/chat/rants",
   chat_page: (slug: string) => `/chat/${slug}`,
 };
 

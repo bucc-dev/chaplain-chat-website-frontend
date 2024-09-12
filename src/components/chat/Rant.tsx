@@ -1,81 +1,53 @@
-import { AUTH_DATA } from "@/atoms/atoms";
-import { Button } from "@/components/ui/button";
+import { Rant } from "@/types/chat";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { useAutosizeTextArea } from "@/hooks/general";
-import { saveRant } from "@/lib/api_helpers";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { GoTriangleRight } from "react-icons/go";
 import { cn } from "@/lib/utils";
 import { is } from "@/pages/_app";
-import { useRef, useState } from "react";
-import toast from "react-hot-toast";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { useRecoilValue } from "recoil";
 
-const RantDialog = () => {
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
-  const { token } = useRecoilValue(AUTH_DATA);
-
-  useAutosizeTextArea(textAreaRef.current, content);
-
-  const save = async () => {
-    setLoading(true);
-
-    const { data, error } = await saveRant(token, content);
-
-    setLoading(false);
-
-    if (error) {
-      toast.error(error);
-      return;
-    }
-
-    toast.success(data);
-    setOpen(false);
-  };
-
+const RantDialog = ({ r }: { r: Rant }) => {
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog>
       <DialogTrigger asChild>
-        <button className="text-xs md:text-sm bg-main text-white py-0.5 px-3 rounded-sm cursor-pointer">
-          Rant
-        </button>
+        <div className="w-full cursor-pointer hover:bg-gray-50 py-2 px-3 gap-4 rounded-xl border border-transparent hover:border-gray-200 grid grid-cols-10 items-center justify-center">
+          <Avatar className="col-span-1">
+            <AvatarImage
+              src={`https://api.dicebear.com/9.x/lorelei-neutral/svg?seed=${r.studentId}`}
+              alt="avatar"
+              className="border-2 border-main rounded-full"
+            />
+            <AvatarFallback>ST</AvatarFallback>
+          </Avatar>
+
+          <div className="col-span-8 w-full ml-2">
+            <p className="font-medium mr-auto w-full truncate">{r.content}</p>
+
+            <p className="text-main text-sm">
+              {new Date(r.timestamp).toLocaleString()}
+            </p>
+          </div>
+
+          <GoTriangleRight className="col-span-1" />
+        </div>
       </DialogTrigger>
       <DialogContent className={cn("w-full border", is.className)}>
         <DialogHeader>
-          <DialogTitle>New rant</DialogTitle>
+          <DialogTitle>Rant</DialogTitle>
+          <DialogDescription>
+            {new Date(r.timestamp).toLocaleString()}
+          </DialogDescription>
         </DialogHeader>
 
-        <div className="w-full flex items-center justify-center flex-col gap-4 my-2 h-auto max-h-[calc(100vh-10rem)] overflow-x-scroll p-0.5">
-          <textarea
-            className="w-full border-2 px-3 pb-3 py-2 outline-none focus-within:border-main rounded-md"
-            ref={textAreaRef}
-            value={content}
-            placeholder="Type your rant here..."
-            onChange={(e) => setContent(e.target.value)}
-          />
+        <div className="w-full flex items-center justify-center flex-col gap-4 h-auto max-h-[calc(100vh-10rem)] overflow-x-scroll p-0.5">
+          <p className="w-full text-left">{r.content}</p>
         </div>
-
-        <DialogFooter className="flex flex-col justify-center gap-4 sm:gap-2">
-          <Button
-            className="bg-main font-normal text-white w-full max-w-[10rem] hover:bg-main/90 gap-2"
-            disabled={loading}
-            onClick={save}
-          >
-            {loading && <AiOutlineLoading3Quarters className="animate-spin" />}
-            Save
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
