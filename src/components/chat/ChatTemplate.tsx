@@ -31,7 +31,7 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
       content: message,
       conversationId: asPath.split("/")[2],
       senderId: type === "official" ? convo.staff.id : convo.studentId,
-      receiverType: type === "official" ? "student" : "official",
+      receiverType: type === "official" ? "student" : "staff",
     });
 
     setMessages((k) => [
@@ -53,7 +53,7 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
   useEffect(() => {
     scrollElement.current?.scrollIntoView({ behavior: "smooth" });
 
-    const s = io(BASE_API_URL.replace("/api", ""), {
+    const s = io(BASE_API_URL.replace("/api/v1", ""), {
       auth: { token },
     });
 
