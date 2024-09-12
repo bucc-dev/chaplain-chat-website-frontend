@@ -11,16 +11,17 @@ const Home = () => {
         </h1>
 
         <p className="max-w-xl text-lg text-center text-gray-700">
-          You don&apos;t have to control your thoughts, you just have to stop
-          letting them control you. Speak to someone and let them know
-          what&apos;s on your mind. When a problem is discussed, its weight is
-          reduced.
+          You don&apos;t need to control your thoughts; you just need to stop
+          letting them control you. If you&apos;re facing academic challenges or
+          struggling with your mental health, don&apos;t hesitate to talk to
+          someone. Sharing your concerns can lighten the burden and help you
+          find support.
         </p>
 
         <div className="w-full flex gap-4 items-center justify-center flex-col sm:flex-row">
           <Link href={PAGES.student.login} className="w-full max-w-[15rem]">
             <Button className="bg-main hover:bg-main/90 w-full">
-              Talk to the chaplain
+              Talk to someone
             </Button>
           </Link>
           {/* <Link href={PAGES.staff.login} className="w-full max-w-[15rem]">
