@@ -31,6 +31,7 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
       content: message,
       conversationId: asPath.split("/")[2],
       senderId: type === "official" ? convo.staff.id : convo.studentId,
+      receiverType: type === "official" ? "student" : "official",
     });
 
     setMessages((k) => [
