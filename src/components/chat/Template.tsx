@@ -13,14 +13,14 @@ import Link from "next/link";
 import RantDialog from "./Rant";
 
 const DashboardTemplate = ({ children }: TemplateProps) => {
-  const auth_data = useRecoilValue(AUTH_DATA);
+  const { token, type } = useRecoilValue(AUTH_DATA);
   const [loading, setLoading] = useState(false);
   const { push } = useRouter();
 
   const signOut = async () => {
     setLoading(true);
 
-    const { data, error } = await signOutUser(auth_data.token, auth_data.type);
+    const { data, error } = await signOutUser(token, type);
 
     setLoading(false);
 
@@ -50,12 +50,12 @@ const DashboardTemplate = ({ children }: TemplateProps) => {
               <p className="font-medium">CHAT</p>
 
               <p className="text-xs md:text-sm bg-main text-white py-0.5 px-1.5 rounded-sm">
-                :{auth_data.type}:
+                :{type}:
               </p>
             </div>
           </Link>
 
-          <RantDialog />
+          {type === "student" && <RantDialog />}
 
           <Button
             onClick={signOut}
