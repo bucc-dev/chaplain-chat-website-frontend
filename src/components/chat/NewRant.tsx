@@ -71,7 +71,7 @@ const NewRant = () => {
             onClick={save}
           >
             {loading && <AiOutlineLoading3Quarters className="animate-spin" />}
-            Save
+            Send
           </Button>
         </DialogFooter>
       </DialogContent>

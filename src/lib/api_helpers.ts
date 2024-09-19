@@ -374,7 +374,7 @@ export const saveRant = async (token: string, content: string) => {
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
 
-    return { data: "Your rant has been saved successfully.", error: null };
+    return { data: "Your rant has been sent.", error: null };
   } catch (e: unknown) {
     return { data: null, error: "A server error occured.", message: e };
   }
