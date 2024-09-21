@@ -10,16 +10,17 @@ import { signOutUser } from "@/lib/api_helpers";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import NewRant from "./NewRant";
 
 const DashboardTemplate = ({ children }: TemplateProps) => {
-  const auth_data = useRecoilValue(AUTH_DATA);
+  const { token, type } = useRecoilValue(AUTH_DATA);
   const [loading, setLoading] = useState(false);
   const { push } = useRouter();
 
   const signOut = async () => {
     setLoading(true);
 
-    const { data, error } = await signOutUser(auth_data.token, auth_data.type);
+    const { data, error } = await signOutUser(token, type);
 
     setLoading(false);
 
@@ -44,15 +45,25 @@ const DashboardTemplate = ({ children }: TemplateProps) => {
             className="w-8"
             priority={true}
           /> */}
-          <Link href={PAGES.chat}>
+          <Link href={PAGES.chat} className="mr-auto">
             <div className="flex gap-2 items-center justify-center">
               <p className="font-medium">CHAT</p>
 
               <p className="text-xs md:text-sm bg-main text-white py-0.5 px-1.5 rounded-sm">
-                :{auth_data.type}:
+                :{type}:
               </p>
             </div>
           </Link>
+
+          {type === "student" ? (
+            <NewRant />
+          ) : (
+            <Link href={PAGES.rants}>
+              <button className="text-xs md:text-sm bg-main text-white py-0.5 px-3 rounded-sm cursor-pointer">
+                Rants
+              </button>
+            </Link>
+          )}
 
           <Button
             onClick={signOut}

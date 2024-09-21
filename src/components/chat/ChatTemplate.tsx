@@ -23,6 +23,8 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
   const { type, token } = useRecoilValue(AUTH_DATA);
   const [socket, setSocket] = useState<any>();
 
+  const staff = convo.staff; // get the staff details that the student is currently chatting with
+
   const sendMessage = () => {
     if (!message) return;
 
@@ -31,6 +33,7 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
       content: message,
       conversationId: asPath.split("/")[2],
       senderId: type === "official" ? convo.staff.id : convo.studentId,
+      receiverType: type === "official" ? "student" : "staff",
     });
 
     setMessages((k) => [
@@ -52,7 +55,7 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
   useEffect(() => {
     scrollElement.current?.scrollIntoView({ behavior: "smooth" });
 
-    const s = io(BASE_API_URL.replace("/api", ""), {
+    const s = io(BASE_API_URL.replace("/api/v1", ""), {
       auth: { token },
     });
 
@@ -71,8 +74,8 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
           {
             id: "",
             conversationId: asPath.split("/")[2],
-            senderId: type === "official" ? convo.staff.id : convo.studentId,
-            receiverId: type === "official" ? convo.studentId : convo.staff.id,
+            senderId: msg.senderId,
+            receiverId: "",
             content: msg.content,
             timestamp: msg.timestamp,
             status: "delivered",
@@ -88,6 +91,16 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
 
   return (
     <div className="h-[calc(100vh-6rem)] flex flex-col gap-4">
+      <div className="flex items-center justify-center gap-2">
+        <p className="font-medium">
+          {staff.firstname} {staff.lastname}
+        </p>
+
+        <p className="text-main bg-white shadow-sm border px-1 rounded">
+          :{staff.type}:
+        </p>
+      </div>
+
       <div className="w-full overflow-y-scroll h-full max-h-[calc(100vh-7rem)] flex flex-col gap-2">
         {messages.map((m, i) => {
           const date_time = new Date(m.timestamp).toLocaleString();
@@ -97,15 +110,15 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
               key={i}
               className={cn(
                 "w-full max-w-sm",
-                m.receiverId === info?.id ? "self-start" : "self-end"
+                m.senderId === info?.id ? "self-end" : "self-start"
               )}
             >
               <p
                 className={cn(
                   "p-3 w-full mb-1",
-                  m.receiverId === info?.id
-                    ? "self-start bg-gray-100 rounded-e-xl rounded-t-xl"
-                    : "self-end bg-main text-white rounded-s-xl rounded-t-xl"
+                  m.senderId === info?.id
+                    ? "self-end bg-main text-white rounded-s-xl rounded-t-xl"
+                    : "self-start bg-gray-100 rounded-e-xl rounded-t-xl"
                 )}
               >
                 {m.content}
@@ -114,7 +127,7 @@ const StudentChat = ({ convo, info }: ChatTemplateProps) => {
               <p
                 className={cn(
                   "text-xs text-gray-400 w-full",
-                  m.receiverId === info?.id ? "text-left" : "text-right"
+                  m.senderId === info?.id ? "text-right" : "text-left"
                 )}
               >
                 {date_time}

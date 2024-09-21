@@ -43,6 +43,7 @@ export type ConversationWithMessageId = {
     firstname: string;
     id: string;
     lastname: string;
+    type: string;
   };
 };
 
@@ -55,6 +56,7 @@ export type ConversationWithMessageDetails = {
     firstname: string;
     id: string;
     lastname: string;
+    type: string;
   };
 };
 
@@ -71,4 +73,12 @@ export type Message = {
 export type ChatTemplateProps = {
   convo: ConversationWithMessageDetails;
   info: StudentInfo | StaffInfo | null;
+};
+
+export type Rant = {
+  _id: string;
+  studentId: string;
+  content: string;
+  timestamp: string;
+  __v: number;
 };

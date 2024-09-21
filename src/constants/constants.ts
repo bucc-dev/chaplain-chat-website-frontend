@@ -1,6 +1,6 @@
 export const BASE_URL = "https://chaplaincy-helpdesk.vercel.app";
 
-export const BASE_API_URL = "https://chaplain-backend-test.onrender.com/api";
+export const BASE_API_URL = "https://chaplain-backend-test.onrender.com/api/v1";
 export const BASE_STAFF_URL = `${BASE_API_URL}/staffs`;
 export const BASE_STUDENT_URL = `${BASE_API_URL}/students`;
 
@@ -20,13 +20,15 @@ export const PAGES = {
     login: "/auth/staff/login",
     signup: "/auth/staff/signup",
     verify: (email: string) => `/auth/staff/verify?email=${email}`,
+    forgot_password: "/auth/staff/forgot-password",
+    reset_password: "/auth/staff/reset-password",
   },
   student: { login: "/auth/student/login", signup: "/auth/student/signup" },
-  // forgot_password: "/auth/forgot-password",
 
   home: "/",
   chat: "/chat",
   start_chat: "/chat/start",
+  rants: "/chat/rants",
   chat_page: (slug: string) => `/chat/${slug}`,
 };
 

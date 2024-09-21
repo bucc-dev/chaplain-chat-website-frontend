@@ -86,7 +86,7 @@ const Login = () => {
           </button>
         </div>
 
-        {/* <div className="mt-4 flex justify-between items-center flex-col lg:flex-row gap-2 text-sm">
+        <div className="mt-4 flex justify-between items-center flex-col lg:flex-row gap-2 text-sm">
           <p>
             Don&apos;t have an account?{" "}
             <Link href={PAGES.staff.signup} className="text-main">
@@ -94,10 +94,10 @@ const Login = () => {
             </Link>
           </p>
 
-         <Link href="" className="text-main">
+          <Link href={PAGES.staff.forgot_password} className="text-main">
             Forgot password?
           </Link>
-        </div> */}
+        </div>
 
         <Button
           disabled={loading}

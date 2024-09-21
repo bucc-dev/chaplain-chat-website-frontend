@@ -19,7 +19,7 @@ export const checkAuthentication = (ProtectedComponent: any) => {
       );
 
       // if the token has expired, push to login page
-      if (expires_at <= Date.now()) {
+      if (expires_at <= Date.now() || !token) {
         push(type === "official" ? PAGES.staff.login : PAGES.student.login);
         return;
       }

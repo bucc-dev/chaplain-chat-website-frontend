@@ -9,6 +9,7 @@ import { GoTriangleRight } from "react-icons/go";
 import { useRecoilValue } from "recoil";
 import PageLoader from "../general/PageLoader";
 import { ConversationWithMessageId } from "@/types/chat";
+import { capitalize } from "@/lib/utils";
 
 const Conversations = () => {
   const { token, type } = useRecoilValue(AUTH_DATA);
@@ -59,9 +60,13 @@ const Conversations = () => {
             )}
 
             {type === "student" && (
-              <p className="font-medium mr-auto">
-                {c.staff.firstname} {c.staff.lastname}
-              </p>
+              <div className="mr-auto">
+                <p className="font-medium mr-auto">
+                  {c.staff.firstname} {c.staff.lastname}
+                </p>
+
+                <p className="text-main">{capitalize(c.staff.type)}</p>
+              </div>
             )}
 
             <GoTriangleRight />
