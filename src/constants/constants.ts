@@ -20,9 +20,10 @@ export const PAGES = {
     login: "/auth/staff/login",
     signup: "/auth/staff/signup",
     verify: (email: string) => `/auth/staff/verify?email=${email}`,
+    forgot_password: "/auth/staff/forgot-password",
+    reset_password: "/auth/staff/reset-password",
   },
   student: { login: "/auth/student/login", signup: "/auth/student/signup" },
-  // forgot_password: "/auth/forgot-password",
 
   home: "/",
   chat: "/chat",

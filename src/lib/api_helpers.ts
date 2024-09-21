@@ -399,3 +399,50 @@ export const getRants = async (token: string) => {
     return { data: null, error: "A server error occured.", message: e };
   }
 };
+
+export const sendPasswordResetLink = async (email: string) => {
+  if (!isValidEmail(email))
+    return { data: null, error: "Your email address is invalid." };
+
+  try {
+    const req = await fetch(BASE_STAFF_URL + "/resetPassword", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+    const res = (await req.json()) as any;
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: res.message + ".", error: null };
+  } catch (e: unknown) {
+    return { data: null, error: "A server error occured.", message: e };
+  }
+};
+
+export const updatePassword = async (password: string, token: string) => {
+  try {
+    const req = await fetch(BASE_STAFF_URL + "/updatePassword", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        password,
+        confirmPassword: password,
+      }),
+    });
+    const res = (await req.json()) as any;
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: res.message, error: null };
+  } catch (e: unknown) {
+    return { data: null, error: "A server error occured.", message: e };
+  }
+};

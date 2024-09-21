@@ -3,20 +3,29 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import HeadTemplate from "@/components/general/HeadTemplate";
+import Link from "next/link";
+import { PAGES } from "@/constants/constants";
+import toast from "react-hot-toast";
+import { sendPasswordResetLink } from "@/lib/api_helpers";
+import { useRouter } from "next/router";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const sendResetLink = async () => {
-    // setLoading(true);
-    // const { data, error } = await resetPassword(email);
-    // setLoading(false);
-    // if (error) {
-    //   toast.error(error);
-    //   return;
-    // }
-    // toast.success(data);
+    setLoading(true);
+
+    const { data, error } = await sendPasswordResetLink(email);
+
+    setLoading(false);
+
+    if (error) {
+      toast.error(error);
+      return;
+    }
+
+    toast.success(data);
   };
 
   return (
@@ -32,6 +41,12 @@ const ForgotPassword = () => {
           placeholder="Email"
           value={email}
         />
+
+        <div className="mt-4 flex justify-between items-center flex-col lg:flex-row gap-2 text-sm">
+          <Link href={PAGES.staff.login} className="text-main">
+            Login
+          </Link>
+        </div>
 
         <Button
           disabled={loading}

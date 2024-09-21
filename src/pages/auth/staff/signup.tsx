@@ -115,6 +115,10 @@ const Signup = () => {
               login
             </Link>
           </p>
+
+          <Link href={PAGES.staff.forgot_password} className="text-main">
+            Forgot password?
+          </Link>
         </div>
 
         <Button
