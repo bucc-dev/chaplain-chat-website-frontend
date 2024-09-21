@@ -1,15 +1,12 @@
 import { AUTH_DATA } from "@/atoms/atoms";
 import RantDialog from "@/components/chat/Rant";
 import PageLoader from "@/components/general/PageLoader";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PAGES } from "@/constants/constants";
 import { getRants } from "@/lib/api_helpers";
 import { Rant } from "@/types/chat";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { GoTriangleRight } from "react-icons/go";
 import { useRecoilValue } from "recoil";
 
 const Rants = () => {

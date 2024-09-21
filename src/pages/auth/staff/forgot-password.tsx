@@ -7,7 +7,6 @@ import Link from "next/link";
 import { PAGES } from "@/constants/constants";
 import toast from "react-hot-toast";
 import { sendPasswordResetLink } from "@/lib/api_helpers";
-import { useRouter } from "next/router";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
