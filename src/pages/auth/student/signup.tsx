@@ -50,7 +50,12 @@ const Signup = () => {
       <HeadTemplate title="Create a student account" />
 
       <div className="max-w-lg w-full bg-white p-4 rounded-lg border shadow-md">
-        <p className="text-2xl font-medium mb-5">Create a new account</p>
+        <p className="text-2xl font-medium mb-2">Create a new account</p>
+
+        <p className="mb-5 text-sm bg-red-600 bg-opacity-10 text-red-600 p-2 rounded-md">
+          This is an anonymous account. You cannot directly recover it if you
+          forget the password.
+        </p>
 
         <p className="text-lg mb-1">Username</p>
         <Input
