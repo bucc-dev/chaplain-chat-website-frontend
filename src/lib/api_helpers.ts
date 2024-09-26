@@ -192,7 +192,7 @@ export const registerStudent = async (data: StudentRegisterForm) => {
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
 
-    return { data: res.message + ".", error: null };
+    return { data: res.data.token, error: null };
   } catch (e: unknown) {
     return { data: null, error: "A server error occurred.", message: e };
   }

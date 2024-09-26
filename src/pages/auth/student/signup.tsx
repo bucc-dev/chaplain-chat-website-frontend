@@ -41,8 +41,16 @@ const Signup = () => {
       return;
     }
 
-    toast.success(data);
-    push(PAGES.student.login);
+    toast.success("Signed up.");
+    localStorage.setItem(
+      "auth-data",
+      JSON.stringify({
+        token: data,
+        expires_at: Date.now() + 43_200_000, // sets the expiry time to be 12 hours from when it was generated
+        type: "student",
+      })
+    );
+    push(PAGES.chat);
   };
 
   return (
